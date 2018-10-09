@@ -75,6 +75,7 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+  config.vm.provision "shell", path: "install.sh"
 
   # Pandama special configuration
   config.vm.communicator = "ssh"
