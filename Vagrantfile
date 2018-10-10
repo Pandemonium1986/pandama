@@ -63,6 +63,35 @@ Vagrant.configure("2") do |config|
     vb.name = "pandama"
     vb.cpus = 2
     vb.linked_clone = false
+    vb.customize ["storagectl", :id, "--name", "Floppy Controller Controller", "--remove"]
+    vb.customize ["storagectl", :id, "--name", "IDE", "--add", "ide","--controller", "PIIX4"]
+    vb.customize ["storageattach", :id, "--storagectl", "IDE", "--port", "0", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive" ]
+    vb.customize ["modifyvm", :id, "--groups", "/Vagrant"]
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+    vb.customize ["modifyvm", :id, "--boot1", "dvd"]
+    vb.customize ["modifyvm", :id, "--boot2", "disk"]
+    vb.customize ["modifyvm", :id, "--boot3", "none"]
+    vb.customize ["modifyvm", :id, "--boot4", "none"]
+    vb.customize ["modifyvm", :id, "--vram", "64"]
+    vb.customize ["modifyvm", :id, "--description", "
+############
+### pandama###
+############
+Pandemonium Vagrant Box
+C'est une Debian 9.5.0 qui ne possede que le strict minimum.
+--------------------------------------------------
+Os : Debian 9.5.0.
+Tools :
+* One line debian install.
+* adduser pandemonium sudo
+* vim /etc/banner.txt
+* vim /etc/ssh/sshd_config
+* systemctl restart sshd.service
+* m-a prepare
+* mount /dev/cdrom /mnt
+* sh /mnt/VBoxLinuxAdditions.run
+* sudo vim /etc/network/interfaces.
+      "]
   end
 
   # View the documentation for the provider you are using for more
