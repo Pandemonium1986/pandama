@@ -63,9 +63,9 @@ Vagrant.configure("2") do |config|
     vb.name = "pandama"
     vb.cpus = 2
     vb.linked_clone = false
-    vb.customize ["storagectl", :id, "--name", "Floppy Controller Controller", "--remove"]
-    vb.customize ["storagectl", :id, "--name", "IDE", "--add", "ide","--controller", "PIIX4"]
-    vb.customize ["storageattach", :id, "--storagectl", "IDE", "--port", "0", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive" ]
+    # vb.customize ["storagectl", :id, "--name", "Floppy Controller Controller", "--remove"]
+    # vb.customize ["storagectl", :id, "--name", "IDE", "--add", "ide","--controller", "PIIX4"]
+    # vb.customize ["storageattach", :id, "--storagectl", "IDE", "--port", "0", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive" ]
     vb.customize ["modifyvm", :id, "--groups", "/Vagrant"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
     vb.customize ["modifyvm", :id, "--boot1", "dvd"]
