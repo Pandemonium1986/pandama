@@ -3,6 +3,9 @@
 ### Pandama : Vagrant Shell provisioner ###
 ###########################################
 
+#-- Environment Variables
+VAGRANT_USER="vagrant"
+
 #####################
 # Apt configuration #
 #####################
@@ -64,12 +67,19 @@ apt-get install -y docker-ce
 # Custom configuration #
 ########################
 
-if  [ ! -d /home/vagrant/.oh-my-zsh ]; then
-	su - vagrant -c 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+if  [ ! -d /home/$VAGRANT_USER/.oh-my-zsh ]; then
+	if  [ -f /bin/zsh ]; then
+		chsh -s /bin/zsh $VAGRANT_USER
+		su - $VAGRANT_USER -c 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+	fi
 fi
 
-if  [ ! -d /home/vagrant/git/Pandemonium1986/dotfiles ]; then
-	su - vagrant -c 'mkdir -p /home/vagrant/git/Pandemonium1986'
-	cd  /home/vagrant/git/Pandemonium1986
-	su - vagrant -c 'git clone https://github.com/Pandemonium1986/dotfiles'
+if  [ ! -d /home/$VAGRANT_USER/.tmuxifier ]; then
+	if  [ -f /usr/bin/tmux ]; then
+		su - $VAGRANT_USER -c 'git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier'
+	fi
+fi
+
+if  [ ! -d /home/$VAGRANT_USER/git/Pandemonium1986/dotfiles ]; then
+	su - $VAGRANT_USER -c 'git clone https://github.com/Pandemonium1986/dotfiles ~/git/Pandemonium1986/dotfies'
 fi
