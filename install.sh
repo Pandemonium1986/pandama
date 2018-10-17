@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#############################################
-##   Pandama : Vagrant Shell provisioner   ##
-#############################################
+###########################################
+### Pandama : Vagrant Shell provisioner ###
+###########################################
 
 #####################
 # Apt configuration #
@@ -36,16 +36,18 @@ apt-get install -y \
 	gnupg2 \
 	software-properties-common
 
-#-- Configure external source list.
-echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/backports.list
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"
+#-- Configuring the external source list.
+if [ ! -f /etc/apt/sources.list.d/backports.list ]; then
+	echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/backports.list
+	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+	add-apt-repository \
+	   "deb [arch=amd64] https://download.docker.com/linux/debian \
+	   $(lsb_release -cs) \
+	   stable"
+fi
 apt-get update
 
-#-- Backpos
+#-- Backports
 apt-get -t stretch-backports install -y \
 	ansible \
 	curl \
@@ -56,10 +58,18 @@ apt-get -t stretch-backports install -y \
 
 #-- Docker
 apt-get install -y docker-ce
- # ---------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------- #
 
-if ! [ -L /home/vagrant/git/Pandemonium1986 ]; then
-	mkdir -p /home/vagrant/git/Pandemonium1986
+########################
+# Custom configuration #
+########################
+
+if  [ ! -d /home/vagrant/.oh-my-zsh ]; then
+	su - vagrant -c 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+fi
+
+if  [ ! -d /home/vagrant/git/Pandemonium1986/dotfiles ]; then
+	su - vagrant -c 'mkdir -p /home/vagrant/git/Pandemonium1986'
 	cd  /home/vagrant/git/Pandemonium1986
-	git clone https://github.com/Pandemonium1986/dotfiles
+	su - vagrant -c 'git clone https://github.com/Pandemonium1986/dotfiles'
 fi
