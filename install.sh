@@ -13,12 +13,15 @@ VAGRANT_USER="vagrant"
 #-- Install mandatory packages
 apt-get update
 apt-get install -y \
+	apt-transport-https \
 	build-essential \
+	ca-certificates \
 	curl \
 	cowsay \
 	dkms \
 	dnsutils \
 	fonts-powerline \
+	gnupg2 \
 	htop \
 	libfortune-perl \
 	man \
@@ -27,17 +30,11 @@ apt-get install -y \
 	net-tools \
 	nmap \
 	powerline \
+	software-properties-common \
 	sudo \
 	tree \
 	unzip \
 	vim
-
-#-- Docker
-apt-get install -y \
-	apt-transport-https \
-	ca-certificates \
-	gnupg2 \
-	software-properties-common
 
 #-- Configuring the external source list.
 if [ ! -f /etc/apt/sources.list.d/backports.list ]; then
@@ -61,6 +58,9 @@ apt-get -t stretch-backports install -y \
 
 #-- Docker
 apt-get install -y docker-ce
+groupadd docker
+usermod -aG docker $VAGRANT_USER
+systemctl enable docker
 # ---------------------------------------------------------------------------- #
 
 ########################
@@ -71,6 +71,8 @@ if  [ ! -d /home/$VAGRANT_USER/.oh-my-zsh ]; then
 	if  [ -f /bin/zsh ]; then
 		chsh -s /bin/zsh $VAGRANT_USER
 		su - $VAGRANT_USER -c 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+		su - $VAGRANT_USER -c 'git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions'
+		su - $VAGRANT_USER -c 'git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting'
 	fi
 fi
 
@@ -81,5 +83,6 @@ if  [ ! -d /home/$VAGRANT_USER/.tmuxifier ]; then
 fi
 
 if  [ ! -d /home/$VAGRANT_USER/git/Pandemonium1986/dotfiles ]; then
-	su - $VAGRANT_USER -c 'git clone https://github.com/Pandemonium1986/dotfiles ~/git/Pandemonium1986/dotfies'
+	su - $VAGRANT_USER -c 'git clone https://github.com/Pandemonium1986/dotfiles ~/git/Pandemonium1986/dotfiles'
+	su - $VAGRANT_USER -c '~/git/Pandemonium1986/dotfiles/install.sh all'
 fi
