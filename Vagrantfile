@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+Vagrant.require_version ">= 2.1.5"
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -13,12 +15,12 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "debian/stretch64"
-  config.vm.box_version = "> 9.5.0"
+  config.vm.box_version = ">= 9.5.0"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+  config.vm.box_check_update = true
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -33,7 +35,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", ip: "192.168.66.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -49,15 +51,49 @@ Vagrant.configure("2") do |config|
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
+
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+
+    # Customize the amount of memory on the VM:
+    vb.memory = "2048"
+
+    # Pandama special configuration
+    vb.name = "pandama"
+    vb.cpus = 2
+    vb.linked_clone = false
+    # vb.customize ["storagectl", :id, "--name", "Floppy Controller Controller", "--remove"]
+    # vb.customize ["storagectl", :id, "--name", "IDE", "--add", "ide","--controller", "PIIX4"]
+    # vb.customize ["storageattach", :id, "--storagectl", "IDE", "--port", "0", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive" ]
+    vb.customize ["modifyvm", :id, "--groups", "/Vagrant"]
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+    vb.customize ["modifyvm", :id, "--boot1", "dvd"]
+    vb.customize ["modifyvm", :id, "--boot2", "disk"]
+    vb.customize ["modifyvm", :id, "--boot3", "none"]
+    vb.customize ["modifyvm", :id, "--boot4", "none"]
+    vb.customize ["modifyvm", :id, "--vram", "64"]
+    vb.customize ["modifyvm", :id, "--description", "
+############
+### pandama###
+############
+Pandemonium Vagrant Box
+C'est une Debian 9.5.0 qui ne possede que le strict minimum.
+--------------------------------------------------
+Os : Debian 9.5.0.
+Tools :
+* One line debian install.
+* adduser pandemonium sudo
+* vim /etc/banner.txt
+* vim /etc/ssh/sshd_config
+* systemctl restart sshd.service
+* m-a prepare
+* mount /dev/cdrom /mnt
+* sh /mnt/VBoxLinuxAdditions.run
+* sudo vim /etc/network/interfaces.
+      "]
+  end
+
   # View the documentation for the provider you are using for more
   # information on available options.
 
@@ -68,4 +104,11 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+  config.vm.provision "shell", path: "install.sh"
+
+  # Pandama special configuration
+  config.vm.communicator = "ssh"
+  config.vm.graceful_halt_timeout = 60
+  config.vm.hostname = "pandama"
+  config.vm.post_up_message = "Welcome to Pandama Land"
 end
