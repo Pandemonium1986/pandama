@@ -1,87 +1,40 @@
 # Pandama
 
-One Paragraph of project description goes here
+Debian environment provided with my basic tools.  
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+This project start a virtualbox vm from the official debian/stretch64 vagrant box.  
+He is provided with simple shell provisioner wich available a fully environment with my basics tools.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).  
+Install [Vagrant](https://www.vagrantup.com/downloads.html).  
 
-```
-Give examples
-```
+You can read official documentation for installation instruction or read my cheatsheet.  
+
+-   [VirtualBox cheatsheet](https://github.com/Pandemonium1986/cheatsheet/blob/master/Vagrant.md).  
+-   [Vagrant cheatsheet](https://github.com/Pandemonium1986/cheatsheet/blob/master/VirtualBox.md).  
+
+If you are on windows I recommended to use mintty or cmder for vagrant command execution.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Simply clone repository and use `vagrant up` command.
 
-Say what the step will be
+    git clone https://github.com/Pandemonium1986/pandama.git ~/git/Pandemonium1986/pandama
+    cd ~/git/Pandemonium1986/pandama
+    vagrant up
 
-```
-Give the example
-```
+If you want to access to the vm after 'up' use
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+    vagrant ssh
 
 ## Authors
 
-* **Michael Maffait** - *Initial work* - [Pandemonium1986](https://github.com/Pandemonium1986)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+-   **Michael Maffait** - _Initial work_ - [Pandemonium1986](https://github.com/Pandemonium1986)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
