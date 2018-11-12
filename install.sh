@@ -4,7 +4,7 @@
 ###########################################
 
 #-- Environment Variables
-VAGRANT_USER="vagrant"
+VAGRANT_USER="pandemonium"
 
 #####################
 # Apt configuration #
@@ -56,7 +56,14 @@ apt-get -t stretch-backports install -y \
 	tmux \
 	zsh
 
-#-- Docker
+#-- Create $VAGRANT_USER if he is different of Vagrant
+if ! id -u $VAGRANT_USER > /dev/null 2>&1 ; then
+	adduser $VAGRANT_USER --gecos "" --shell "/bin/zsh" --disabled-password
+	su - $VAGRANT_USER -c 'ssh-keygen -q -t rsa -b 4096 -N "" -f "$HOME/.ssh/id_rsa" -C "fake_key"'
+	usermod -a -G cdrom,floppy,audio,dip,video,plugdev,netdev $VAGRANT_USER
+fi
+
+#-- Docker0
 apt-get install -y docker-ce
 groupadd docker
 usermod -aG docker $VAGRANT_USER

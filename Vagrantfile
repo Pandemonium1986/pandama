@@ -111,4 +111,5 @@ Tools :
   config.vm.graceful_halt_timeout = 60
   config.vm.hostname = "pandama"
   config.vm.post_up_message = "Welcome to Pandama Land"
+  # config.ssh.username = "pandemonium"
 end
