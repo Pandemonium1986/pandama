@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.66.10"
+  config.vm.network "private_network", ip: "192.168.66.11"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -57,10 +57,10 @@ Vagrant.configure("2") do |config|
     vb.gui = false
 
     # Customize the amount of memory on the VM:
-    vb.memory = "2048"
+    vb.memory = "4096"
 
     # Pandama special configuration
-    vb.name = "pandama"
+    vb.name = "minikube"
     vb.cpus = 2
     vb.linked_clone = false
     # vb.customize ["storagectl", :id, "--name", "Floppy Controller Controller", "--remove"]
@@ -75,22 +75,9 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--vram", "64"]
     vb.customize ["modifyvm", :id, "--description", "
 ############
-### pandama###
+### Minikube###
 ############
-Pandemonium Vagrant Box
-C'est une Debian 9.5.0 qui ne possede que le strict minimum.
---------------------------------------------------
-Os : Debian 9.5.0.
-Tools :
-* One line debian install.
-* adduser pandemonium sudo
-* vim /etc/banner.txt
-* vim /etc/ssh/sshd_config
-* systemctl restart sshd.service
-* m-a prepare
-* mount /dev/cdrom /mnt
-* sh /mnt/VBoxLinuxAdditions.run
-* sudo vim /etc/network/interfaces.
+Pandemonium minikube 1.12.2 vagrant box
       "]
   end
 
@@ -104,12 +91,12 @@ Tools :
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  config.vm.provision "shell", path: "install.sh"
+  config.vm.provision "shell", path: "minikube.sh"
 
   # Pandama special configuration
   config.vm.communicator = "ssh"
   config.vm.graceful_halt_timeout = 60
-  config.vm.hostname = "pandama"
-  config.vm.post_up_message = "Welcome to Pandama Land"
+  config.vm.hostname = "minikube"
+  config.vm.post_up_message = "Welcome to Pandemonium Minikube"
   # config.ssh.username = "pandemonium"
 end
