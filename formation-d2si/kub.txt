@@ -1,0 +1,329 @@
+Kub tire en fait toutes sa force de l'expérience de google.
+---> Deploiement de tache / sacale / lifecycle.
+
+
+Mesos orchestre aussi bien du container qu'autre chose.
+Nomad orchestration de HashiCorp.
+
+
+kub en détail
+ETCD = bdd de kub (clef/valeur).
+ETCD Peut etre sur un serveur en dehors de la master mais c'est mieux.
+
+Quorum donc 3 ou 5.
+
+
+--------------------------------------------------------------------------------
+https://kubernetes.io/docs/tasks/tools/install-kubectl/
+
+sudo apt-get update && sudo apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+
+
+
+https://kubernetes.io/docs/tasks/tools/install-minikube/
+
+wget https://github.com/kubernetes/minikube/releases/download/v0.30.0/minikube_0.30-0.deb
+
+sudo dpkg -i ~/minikube_0.30-0.deb
+
+sudo minikube start --kubernetes-version="v1.12.2" --vm-driver="none"
+
+
+
+WARNING: IT IS RECOMMENDED NOT TO RUN THE NONE DRIVER ON PERSONAL WORKSTATIONS
+        The 'none' driver will run an insecure kubernetes apiserver as root that may leave the host vulnerable to CSRF attacks
+
+When using the none driver, the kubectl config and credentials generated will be root owned and will appear in the root home directory
+You will need to move the files to the appropriate location and then set the correct permissions.  An example of this is below:
+
+        sudo mv /root/.kube $HOME/.kube # this will write over any previous configuration
+        sudo chown -R $USER $HOME/.kube
+        sudo chgrp -R $USER $HOME/.kube
+
+        sudo mv /root/.minikube $HOME/.minikube # this will write over any previous configuration
+        sudo chown -R $USER $HOME/.minikube
+        sudo chgrp -R $USER $HOME/.minikube
+
+This can also be done automatically by setting the env var CHANGE_MINIKUBE_NONE_USER=true
+Loading cached images from config file.
+--------------------------------------------------------------------------------
+
+
+Chaque projet = son namespace = cluster logic
+kubectl get KR tot
+
+1 pod => 1 node
+
+Etat des containers :
+Pending -> Running -
+Par défault tous est ouvert. les pods discute entre eux les namespace discute entre eux.
+On peut définir des status de pod depuis le fchier de conf :
+liveness et rediness.
+
+Au sein d'un pod le volume est persosté dans le pod.
+Tant que le pod vis le volume est vis mais dès lors que le pod tombe le volume tombe.
+
+
+Kub gère nativement des volumes genre direct du aws cloud ou du cephfs
+
+POur chiffrer un vrai secret on passe par un service Secret mais il faut un vrai Vault.
+--------------------------------------------------------------------------------
+TP 2 : 
+-----> 1 ###
+Création d'un namespace
+sudo kubectl create namespace kube-pdm
+
+Création du pod depuis le fichier yaml
+
+yaml :
+
+apiVersion:   v1
+kind:         Pod
+metadata:
+  name:       kube-pdm-pod-nginx
+  labels:
+    app:      kube-pdm-nginx
+  namespace: kube-pdm
+spec:
+  containers:
+  - name:     nginx
+    image:    nginx
+    ports:
+    - containerPort: 80
+
+sudo kubectl create -f kube-pdm.yaml
+sudo kubectl get pods -n kube-pdm    
+sudo kubectl get pods -n kube-pdm -o wide
+sudo kubectl logs kube-pdm-pod-nginx -n kube-pdm -v=9
+# sudo kubectl top kube-pdm-pod-nginx
+
+Destroy pod :
+sudo kubectl delete pod kube-pdm-pod-nginx -n kube-pdm
+sudo kubectl create -f kube-pdm.yaml
+
+Exec pod : 
+sudo kubectl exec kube-pdm-pod-nginx -n kube-pdm sh
+-> Manque le -ti pour persister le sh.
+sudo kubectl exec kube-pdm-pod-nginx -n kube-pdm -ti -- sh 
+-> le -- permet de faire la différence avec la commande.
+
+Pour aller plus loin :
+On kill le process nginx cela tue le container qui tue le pods 
+MAIS C4EST LA MAGIE
+vagrant@minikube  ~  sudo kubectl get pods -n kube-pdm -o wide
+NAME                 READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE
+kube-pdm-pod-nginx   1/1     Running   1          15m   172.17.0.3   minikube   <none>
+
+Le nombre de restart est à 1.
+--------------------------------------------------------------------------------
+Il existe un container pause dans chaque pod. C'est lui qui est en phase de la portabilité de l'adresse IP et du reste.
+C'est un genre de container principal.
+--------------------------------------------------------------------------------
+
+Kube c'est idempotent pour toutes les ressources SAUF les secrets
+
+Du coup on peut tout créer dans un seul fichier, il suffit de séparer chaque ressource par un --- yaml.
+De ce fait j'ai un fichier qui décrit l'ensemble de mon enviromment que je peux "apply" autant de fois que je veux.
+
+apiVersion	"v1"
+metadata	
+name	"development"
+labels	
+name	"development"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-html
+data:
+  index.html: |
+      Nginx V1.31.6
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+      app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.15.5
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      readOnly: true
+      name: index-html
+  volumes:
+  - name: index-html
+    configMap:
+      name: index-html
+      items:
+        - key: index.html
+          path: index.html
+
+
+          
+          ---
+apiVersion:       v1
+kind:             Namespace
+metadata:
+  name:           kube-pdm
+  labels:
+    app:          kube-pdm
+# ---
+# apiVersion:       v1
+# kind:             ConfigMap
+# metadata:
+#   name:           myindex
+# data:
+#   index.html:   |
+#     Nginx V1.31.6
+---
+apiVersion:       v1
+kind:             Pod
+metadata:
+  name:           kube-pdm-pod-nginx
+  labels:
+    app:          kube-pdm-nginx
+  namespace:      kube-pdm
+spec:
+  containers:
+  - name:         nginx
+    image:        nginx
+    ports:
+    - containerPort: 80
+  #   volumeMounts:
+  #   - mountPath:  /usr/share/nginx/html
+  #     readOnly:   true
+  #     name:       volumesnginx
+  # volumes:
+  #   - name:         volumesnginx
+  #     configMap:
+  #       name:       myindex
+  #       items:
+  #       - key: index.html
+  #         path: index.html
+
+--------------------------------------------------------------------------------
+On passe par les services pour communiquer avec TLM.
+Le service Headless : 
+- Il permet de faire de l'aggrégat de pod. Par ex pour les métric de prométéus
+--------------------------------------------------------------------------------
+TP3 : 
+ sudo kubectl apply -f tp3.yaml
+
+sudo kubectl describe svc svc-nginx
+
+sudo kubectl delete pod kube-pdm-pod-nginx -n kube-pdm
+sudo kubectl create -f kube-pdm.yaml
+sudo kubectl describe svc svc-nginx
+
+--------------------------------------------------------------------------------
+Day 2 : 
+
+On a vu :
+Pod
+Namespace
+Volume
+ConfigMap
+Secret
+Service
+--> 
+    Headless
+    ClusterIp : Service standard
+    Nodeport
+    LB
+Concept de EndPoint ^^    
+Metadata :
+    Label = Identification
+    Annotation : ne permet pas l'identtification mais permet de donner des traitement
+    sur la ressource.
+
+
+Deux typer d'approche :
+Déclaratif  = apply.
+Itératif = create.
+
+Déploiement :
+approche du pets vs cattle.
+Le pets c'est ton pote tu le connais tu le nomme c'est ton serveur bref ton dada.
+Le cattle ... tu sais pas c'est des id ca se réplique ca bouge tu sais ce que c'est mais tu te fous un peu statut exact.
+
+
+TP 4:
+sudo kubectl apply -f tp4.yml
+sudo kubectl describe deployment 
+sudo kubectl get deployment -n kube-pdm-depl
+sudo kubectl get describe -n kube-pdm-depl
+sudo kubectl describe deployment -n kube-pdm-depl
+
+Ajout du service
+sudo kubectl apply -f tp4.yml
+sudo kubectl describe svc svc-nginx -n kube-pdm-depl
+curl 10.111.48.207
+
+Pour scaler :
+Passage de 2 à 4 réplicat dans le fichier
+sudo kubectl apply -f tp4.yml
+sudo kubectl describe svc svc-nginx -n kube-pdm-depl
+sudo kubectl get pod -n kube-pdm-depl
+
+Modifier la version d'nginx :
+sudo kubectl apply -f tp4.yml
+watch sudo kubectl get pod -n kube-pdm-depl
+
+POur scaler en commande :
+sudo kubectl scale deploy/nginx-deployment --replicas=6 -n kube-pdm-depl
+
+Si on scale en commande et qu'on changer la version d'nginx via apply on retombe sur
+sudo kubectl apply -f tp4.yml
+
+Rollout :
+sudo kubectl rollout history deployment/nginx-deployment -n kube-pdm-depl
+
+Go back
+sudo kubectl rollout undo deployment/nginx-deployment -n kube-pdm-depl --to-revision=1
+--------------------------------------------------------------------------------
+Ingress controler c'est l'outil qui va gérrer l'ingress.
+le controleur peux etre traffik/nginx & Co.
+--------------------------------------------------------------------------------
+Le Job c'est un pod qu'on exécute qu'une seule fois.
+--------------------------------------------------------------------------------
+TP 6 :
+
+sudo kubectl apply -f tp6.yml
+sudo kubectl get jobs
+sudo kubectl describe jobs pi
+---> On connait le nom du pods 
+sudo kubectl describe po pi-4xlvc
+sudo kubectl get pods --selector=job-name=pi
+sudo kubectl logs --selector=job-name=pi
+
+sudo kubectl apply -f tp62.yml
+sudo kubectl get jobs
+sudo kubectl describe jobs pi
+sudo kubectl describe jobs hello-1542195000-7ht8j
+sudo kubectl describe po --selector=cronjob-name=hello
+sudo kubectl logs --selector=job-name=pi\n
+sudo kubectl get jobs hello-1542195000 -o yaml\n
+sudo kubectl get jobs hello-1542195000 -o yml\n
+sudo kubectl get jobs hello-1542195120 -o yaml\n
+sudo kubectl logs hello-1542195300-dhsxn\n
+
+kubectl get cronjob hello
+--------------------------------------------------------------------------------
+Apiserver c'est le cerveaux.
+Kubelet c'est le processus qui caratérie Kubernet
+C'est 
+Réseaux :
+    -> VM
+    -> Pods
+    -> Services
+    -> Container.
+--------------------------------------------------------------------------------

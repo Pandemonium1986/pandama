@@ -1,0 +1,187 @@
+    1  sudo apt update
+    2  sudo apt upgrade
+    3  sudo vim /etc/banner.txt
+    4  sudo vim /etc/ssh/sshd_config 
+    5  sudo systemctl sshd restart
+    6  sudo systemctl sshdrestart
+    7  sudo systemctl ssh restart
+    8  sudo systemctl restart ssh
+    9  sudo vim /etc/banner.txt
+   10  sudo apt-get update && sudo apt-get install -y apt-transport-https
+   11  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+   12  echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+   13  sudo apt-get update
+   14  sudo apt-get install -y kubectl
+   15  sudo apt-get install -y kubeadm 
+   16  sudo apt-get install -y kubelet
+   17  sudo apt-get install -y kubelet kubeadm kubectl
+   18  sudo apt install 2~
+   19  sudo apt install kubelet kubeadm kubectl
+   20  vim /etc/hostname 
+   21  sudo vim /etc/hostname 
+   22  vim /etc/hosts
+   23  sudo vim /etc/hosts
+   24  ll
+   25  ping kub01 
+   26  sudo reboot
+   27  sudo apt-get update
+   28  sudo apt-get install -y apt-transport-https
+   29  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+   30  sudo echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" |sudo tee /etc/apt/sources.list.d/kubernetes.list
+   31  sudo apt-get update
+   32  sudo apt-get install -y kubelet kubeadm kubectl docker.io
+   33  docker run hello-world
+   34  sduo docker run hello-world
+   35  sudo docker run hello-world
+   36  ll
+   37  usermod -aG docker ubuntu
+   38  sudo usermod -aG docker ubuntu
+   39  kubeadm init
+   40  sudo kubeadm init
+   41  sudo get ns
+   42  sudo kubectl get ns
+   43  sudo kubectl Kub 02  get ns
+   44  sudo kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
+   45  sudo kubectl 10.0.18.185:6443 get ns
+   46  kubectl --help
+   47  sudo kubectl get ns
+   48  sudo kubectl get po
+   49  docker ps
+   50  sudo docker ps
+   51  mkdir -p $HOME/.kube
+   52  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   53  sudo kubectl get po
+   54  sudo kubectl get ns
+   55  sudo kubectl get no
+   56  sudo kubectl get ns
+   57  sudo kubectl get po -n kube-system
+   58  sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+   59  sudo kubectl get po -n kube-system
+   60  sudo kubectl get po -n kube-system --watch
+   61  sudo kubectl logs kube-flannel-ds-amd64-ghc5p
+   62  kubectl get ds -n kube-system
+   63  kubectl get po -o yaml
+   64  kubectl describe ds kube-flannel-ds-amd64
+   65  kubectl describe ds kube-flannel-ds-amd64 -n kube-system
+   66  kubectl describe po kube-flannel-ds-amd64 -n kube-system
+   67  kubectl logs kube-flannel-ds-amd64 -n kube-system
+   68  kubectl get po -o yaml -n kube-system
+   69  kubectl get po -n kube-system
+   70  kubectl logs kube-flannel-ds-amd64-ghc5p -n kube-system
+   71  sudo vim /etc/hosts
+   72  ifconfig
+   73  sudo vim /etc/hosts
+   74  ping kub01
+   75  ping kub02
+   76  kubadm reset
+   77  kubeadm reset
+   78  sudo kubeadm reset
+   79  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+   80  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   81  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   82  kubectl get nodes
+   83  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+   84  kubectl get nodes
+   85  kubectl get pods
+   86  kubectl get pod
+   87  kubectl get pods -n kube-system
+   88  kubectl get pods -n kube-system --watch
+   89  fg
+   90  vim machin.yml
+   91  kubectl apply -f machin.yml 
+   92  kubectl get ns
+   93  kubectl get pods -n kube-pdm-depl
+   94  kubectl get pods -n kube-pdm-depl -o wide
+   95  curl 10.244.2.3
+   96  kubectl get pods -n kube-pdm-depl -o wide
+   97  sudo kubeadm reset
+   98  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+   99  kubectl get nodes
+  100  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  101  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  102  kubectl get nodes
+  103  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+  104  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+  105  kubectl get pods -n kube-system -o wide
+  106  kubectl get pods -n kube-system --watch
+  107  kubectl apply -f machin.yml 
+  108  kubectl get pods -n kube-system -o wide
+  109  kubectl get pods -n kube-pdm-depl -o wide
+  110  curl 10.244.1.4 
+  111  curl 10.244.1.4
+  112  ifconfig
+  113  kubectl get pods -n kube-system -o wide
+  114  kubectl get pods -n kube-pdm-depl -o wide
+  115  curl 10.244.1.4 
+  116  ifconfig
+  117  sudo kubeadm reset
+  118  ifconfig
+  119  sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+  120  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  121  kubectl get nodes
+  122  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+  123  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+  124  kubectl get pods -n kube-system --watch
+  125  kubectl apply -f machin.yml 
+  126  kubectl get pods -n kube-pdm-depl -o wide
+  127  curl 192.168.2.2
+  128  ip link flannel.1
+  129  sudo ip link delete flannel.1
+  130  ifconfig
+  131  curl 192.168.2.2
+  132  sudo ip link delete cni0
+  133  curl 192.168.2.2
+  134  sudo kubeadm reset
+  135  sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+  136  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  137  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  138  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+  139  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+  140  kubectl get pods -n kube-system --watch
+  141  kubectl apply -f machin.yml 
+  142  kubectl get pods -n kube-pdm-depl -o wide
+  143  curl 192.168.2.2
+  144  192.168.2.3
+  145  curl 192.168.2.3
+  146  kubectl get nodes
+  147  kubectl cordon kub03
+  148  kubectl get pods -n kube-pdm-depl -o wide
+  149  kubectl drain kub03
+  150  kubectl uncordon kub03
+  151  kubectl drain kub03
+  152  kubectl cordon kub03
+  153  kubectl get nodes
+  154  kubectl cordon kub03
+  155  kubectl drain kub03
+  156  kubectl uncorded kub03
+  157  kubectl uncordon kub03
+  158  kubectl cordon kub03
+  159  kubectl drain kub03
+  160* kubectl get po --
+  161  kubectl get po
+  162  kubectl get po --all-namespaces
+  163  kubectl get po --all-namespaces -o wide
+  164  kubectl cordon kub03
+  165  kubectl get po --all-namespaces -o wide
+  166  kubectl drain kub03
+  167  kubectl drain kub03 --ignore-daemonsets
+  168  kubectl get po --all-namespaces -o wide
+  169  kubectl delete node kub03
+  170  kubectl get nodes
+  171  kubectl get po --all-namespaces -o wide
+  172  kubectl get nodes
+  173  kubectl cordon kub03
+  174  kubectl drain kub03 --ignore-daemonsets
+  175  kubectl get nodes
+  176  kubectl delete node kub03
+  177  kubectl get nodes
+  178  kubectl get po --all-namespaces -o wide
+  179  kubectl get nodes
+  180  kubectl get po --all-namespaces -o wide
+  181  kubectl get po
+  182  kubectl get po --all-namespaces -o wide
+  183  kubectl delete po kube-pdm-depl -n kube-pdm-depl
+  184  kubectl delete po nginx-deployment-76dd55f5fd-8pqck -n kube-pdm-depl
+  185  kubectl get po --all-namespaces -o wide
+  186  history 
+  187  history > haws.txt

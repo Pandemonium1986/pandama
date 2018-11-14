@@ -1,0 +1,196 @@
+sudo apt-get update
+sudo apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" |sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl docker.io
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+
+hostname
+hosts
+
+sudo kubeadm init sur le master
+
+
+Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of machines by running the following on each node
+as root:
+
+  kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
+  
+
+Kub 02  
+sudo kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
+
+Kub 03  
+sudo kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
+
+
+kube-system
+
+ubuntu@kub01:~$ mkdir -p $HOME/.kube
+ubuntu@kub01:~$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+ubuntu@kub01:~$  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+(reverse-i-search)`kub': mkdir -p $HOME/.^Cbe
+ubuntu@kub01:~$ sudo kubectl get po
+No resources found.
+ubuntu@kub01:~$ sudo kubectl get ns
+NAME          STATUS   AGE
+default       Active   6m37s
+kube-public   Active   6m37s
+kube-system   Active   6m37s
+ubuntu@kub01:~$ sudo kubectl get no
+NAME    STATUS     ROLES    AGE     VERSION
+kub01   NotReady   master   6m46s   v1.12.2
+kub02   NotReady   <none>   4m40s   v1.12.2
+kub03   NotReady   <none>   4m34s   v1.12.2
+ubuntu@kub01:~$ sudo kubectl get ns
+NAME          STATUS   AGE
+default       Active   6m56s
+kube-public   Active   6m56s
+kube-system   Active   6m56s
+ubuntu@kub01:~$ sudo kubectl get po -n kube-system
+NAME                            READY   STATUS              RESTARTS   AGE
+coredns-576cbf47c7-7hhgr        0/1     ContainerCreating   0          6m57s
+coredns-576cbf47c7-p54t8        0/1     ContainerCreating   0          6m57s
+etcd-kub01                      1/1     Running             0          6m8s
+kube-apiserver-kub01            1/1     Running             0          6m11s
+kube-controller-manager-kub01   1/1     Running             0          6m16s
+kube-proxy-jk68x                1/1     Running             0          5m1s
+kube-proxy-m59gr                1/1     Running             0          6m57s
+kube-proxy-tws6d                1/1     Running             0          4m55s
+kube-scheduler-kub01            1/1     Running             0          5m51s
+ubuntu@kub01:~$
+
+kubadm reset
+
+Je veux installer le CDI ca fonctionne pas car mes machines ne communique pas.
+Normal j'ai changé les nom et les hosts
+
+Mais en fait ca fonctionne pas ...
+
+
+Donc on pete tous :
+sudo kubeadm reset
+_______________________________________________
+sudo kubeadm reset
+Sur le 01 
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Sur le 02 et 03 :
+sudo kubeadm join 10.0.18.185:6443 --token assiqf.be9yi34fzkl85f3k --discovery-token-ca-cert-hash sha256:7b373ba69c0bcafd9c7bfe2ee968db07363bf6fdf176c6c3e4db74bd9ea39ec9
+
+Sur le 01 :
+kubectl get nodes
+
+Puis on install le truc de merde
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+
+
+DU COUP TA VU ON FAIT UN DEPLOIEMENT :
+
+
+---
+apiVersion:           v1
+kind:                 Namespace
+metadata:
+  name:               kube-pdm-depl
+  labels:
+    app:              kube-pdm-depl
+---
+apiVersion:           v1
+kind:                 ConfigMap
+metadata:
+  name:               index-html
+  namespace:          kube-pdm-depl
+data:
+  index.html:         |
+      From My Nginx
+---
+apiVersion:           apps/v1
+kind:                 Deployment
+metadata:
+  name:               nginx-deployment
+  namespace:          kube-pdm-depl
+spec:
+  replicas:           4
+  selector:
+    matchLabels:
+      app:            nginx-selector
+  template:
+    metadata:
+      labels:
+        app:          nginx-selector
+    spec:
+      containers:
+      - name:         nginx
+        image:        nginx:1.14.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath:  /usr/share/nginx/html
+          readOnly:   true
+          name:       index-html
+      volumes:
+      - name:         index-html
+        configMap:
+          name:       index-html
+          items:
+            - key:    index.html
+              path:   index.html
+              
+kubectl apply -f machin.yml
+kubectl get pods -n kube-pdm-depl -o wide
+curl des ip de n'importe ou ca fonctionne.
+
+-------------------------------------------------------------------------------
+On passe sur calico
+
+sudo ip link delete cni0
+sudo ip link delete flannel.1
+
+sudo kubeadm reset
+Sur le 01 
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Sur le 02 et 03 :
+sudo kubeadm join 10.0.18.185:6443 --token assiqf.be9yi34fzkl85f3k --discovery-token-ca-cert-hash sha256:7b373ba69c0bcafd9c7bfe2ee968db07363bf6fdf176c6c3e4db74bd9ea39ec9
+
+Sur le 01 :
+kubectl get nodes
+
+Puis on install le truc de merde
+kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+
+kubectl get pods -n kube-pdm-depl -o wide
+
+COOOL ON REDEPLOIE
+-------------------------------------------------------------------------------
+DELETE UN NODE : 
+kubectl cordon kub03
+kubectl get po --all-namespaces -o wide
+kubectl drain kub03 --ignore-daemonsets
+kubectl get po --all-namespaces -o wide
+kubectl get nodes
+kubectl delete node kub03
