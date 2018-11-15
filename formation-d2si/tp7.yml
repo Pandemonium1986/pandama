@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kub-pdm-ds
+  namespace: kube-system
+  labels:
+    k8s-app: kub-pdm-ds-collector
+spec:
+  selector:
+    matchLabels:
+      name: kub-pdm-ds
+  template:
+    metadata:
+      labels:
+        name: kub-pdm-ds
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        args:
+          - /bin/sh
+          - -c
+          - while true; do grep MemFree /proc/meminfo; sleep 10; done
+        securityContext:
+          privileged: true

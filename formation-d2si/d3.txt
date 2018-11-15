@@ -1,0 +1,68 @@
+    1  ll
+    2  ls -l
+    3  kubeadm token create --print-join-command
+    4  kubectl get nodes
+    5  kubectl apply -f tp11.yml 
+    6  kubectl get pv
+    7  kubectl get 
+    8  kubectl get -h
+    9  kubectl get 
+   10  kubectl get -f tp11.yml -o wid
+   11  kubectl get -f tp11.yml -o wide
+   12  kubectl get sc
+   13  kubectl describe local-storag
+   14  kubectl get sc local-storage
+   15  kubectl describe sc local-storage
+   16  kubectl apply -f tp11.yml 
+   17  kubectl get pvc
+   18  kubectl get pvc --watch
+   19  kubectl 
+   20  kubectl po
+   21  kubectl get po
+   22  get st
+   23  kubectl get po -o wide
+   24  curl 192.168.2.2
+   25  kubectl describe sc local-storage
+   26  kubectl get pv
+   27  kubectl get pvc
+   28  kubectl describe pvc-local-storage 
+   29  kubectl describe pvc pvc-local-storage 
+   30  kubectl get po
+   31  kubectl describe po mypod
+   32  kubectl delete -f tp110.yml 
+   33  vim tp110.yml 
+   34  kubectl apply -f tp110.yml 
+   35  kubectl describe po mypod
+   36  kubectl get po
+   37  kubectl describe po mypod
+   38  ll /local
+   39  sudo mkdir -p /local
+   40  ping ip-10-0-44-42
+   41  kubectl delete -f tp110.yml 
+   42  kubectl apply -f tp110.yml 
+   43  cd /local
+   44  ll
+   45  kubectl describe po mypod
+   46  kubectl get po
+   47  kubectl describe po mypod
+   48  ll
+   49  kubectl delete -f tp110.yml 
+   50  cd
+   51  kubectl delete -f tp110.yml 
+   52  kubectl apply -f tp110.yml 
+   53  kubectl get po
+   54  kubectl describe po mypod
+   55  kubectl describe po mypod --watch
+   56  kubectl describe po mypod
+   57  kubectl describe po mypod --watch
+   58  kubectl describe po mypod
+   59  kubectl get po
+   60  kubectl describe po mypod
+   61  ll
+   62  ll /local/
+   63  ll
+   64  kubectl describe po mypod
+   65  kubectl exec -ti mypod bash
+   66  kubectl get po -o wide
+   67  curl 192.168.2.5
+   68  history > d3.txt

@@ -72,7 +72,7 @@ Kub gère nativement des volumes genre direct du aws cloud ou du cephfs
 
 POur chiffrer un vrai secret on passe par un service Secret mais il faut un vrai Vault.
 --------------------------------------------------------------------------------
-TP 2 : 
+TP 2 :
 -----> 1 ###
 Création d'un namespace
 sudo kubectl create namespace kube-pdm
@@ -96,7 +96,7 @@ spec:
     - containerPort: 80
 
 sudo kubectl create -f kube-pdm.yaml
-sudo kubectl get pods -n kube-pdm    
+sudo kubectl get pods -n kube-pdm
 sudo kubectl get pods -n kube-pdm -o wide
 sudo kubectl logs kube-pdm-pod-nginx -n kube-pdm -v=9
 # sudo kubectl top kube-pdm-pod-nginx
@@ -105,14 +105,14 @@ Destroy pod :
 sudo kubectl delete pod kube-pdm-pod-nginx -n kube-pdm
 sudo kubectl create -f kube-pdm.yaml
 
-Exec pod : 
+Exec pod :
 sudo kubectl exec kube-pdm-pod-nginx -n kube-pdm sh
 -> Manque le -ti pour persister le sh.
-sudo kubectl exec kube-pdm-pod-nginx -n kube-pdm -ti -- sh 
+sudo kubectl exec kube-pdm-pod-nginx -n kube-pdm -ti -- sh
 -> le -- permet de faire la différence avec la commande.
 
 Pour aller plus loin :
-On kill le process nginx cela tue le container qui tue le pods 
+On kill le process nginx cela tue le container qui tue le pods
 MAIS C4EST LA MAGIE
 vagrant@minikube  ~  sudo kubectl get pods -n kube-pdm -o wide
 NAME                 READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE
@@ -130,9 +130,9 @@ Du coup on peut tout créer dans un seul fichier, il suffit de séparer chaque r
 De ce fait j'ai un fichier qui décrit l'ensemble de mon enviromment que je peux "apply" autant de fois que je veux.
 
 apiVersion	"v1"
-metadata	
+metadata
 name	"development"
-labels	
+labels
 name	"development"
 ---
 apiVersion: v1
@@ -168,7 +168,7 @@ spec:
           path: index.html
 
 
-          
+
           ---
 apiVersion:       v1
 kind:             Namespace
@@ -212,10 +212,10 @@ spec:
 
 --------------------------------------------------------------------------------
 On passe par les services pour communiquer avec TLM.
-Le service Headless : 
+Le service Headless :
 - Il permet de faire de l'aggrégat de pod. Par ex pour les métric de prométéus
 --------------------------------------------------------------------------------
-TP3 : 
+TP3 :
  sudo kubectl apply -f tp3.yaml
 
 sudo kubectl describe svc svc-nginx
@@ -225,7 +225,7 @@ sudo kubectl create -f kube-pdm.yaml
 sudo kubectl describe svc svc-nginx
 
 --------------------------------------------------------------------------------
-Day 2 : 
+Day 2 :
 
 On a vu :
 Pod
@@ -234,12 +234,12 @@ Volume
 ConfigMap
 Secret
 Service
---> 
+-->
     Headless
     ClusterIp : Service standard
     Nodeport
     LB
-Concept de EndPoint ^^    
+Concept de EndPoint ^^
 Metadata :
     Label = Identification
     Annotation : ne permet pas l'identtification mais permet de donner des traitement
@@ -258,7 +258,7 @@ Le cattle ... tu sais pas c'est des id ca se réplique ca bouge tu sais ce que c
 
 TP 4:
 sudo kubectl apply -f tp4.yml
-sudo kubectl describe deployment 
+sudo kubectl describe deployment
 sudo kubectl get deployment -n kube-pdm-depl
 sudo kubectl get describe -n kube-pdm-depl
 sudo kubectl describe deployment -n kube-pdm-depl
@@ -300,7 +300,7 @@ TP 6 :
 sudo kubectl apply -f tp6.yml
 sudo kubectl get jobs
 sudo kubectl describe jobs pi
----> On connait le nom du pods 
+---> On connait le nom du pods
 sudo kubectl describe po pi-4xlvc
 sudo kubectl get pods --selector=job-name=pi
 sudo kubectl logs --selector=job-name=pi
@@ -320,7 +320,7 @@ kubectl get cronjob hello
 --------------------------------------------------------------------------------
 Apiserver c'est le cerveaux.
 Kubelet c'est le processus qui caratérie Kubernet
-C'est 
+C'est
 Réseaux :
     -> VM
     -> Pods
@@ -331,3 +331,13 @@ Rappel de la journée :
 - Kubelet
 - CNI
 - SCHEDULER
+--------------------------------------------------------------------------------
+Tp 11 :
+Fichier tp11
+apply
+kubectl get sc
+kubectl describe sc local-storage
+modify pour pvc -> apply
+kubectl describe pvc pvc-local-storage
+
+kubectl exec -ti mypod bash

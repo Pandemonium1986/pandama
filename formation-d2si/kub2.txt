@@ -29,12 +29,12 @@ You can now join any number of machines by running the following on each node
 as root:
 
   kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
-  
 
-Kub 02  
+
+Kub 02
 sudo kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
 
-Kub 03  
+Kub 03
 sudo kubeadm join 10.0.18.185:6443 --token l8hftt.3usctgqswhzloctm --discovery-token-ca-cert-hash sha256:5d0779dd25233faec94f190f55fae43ae8779dfa875551724782d45cbd01019f
 
 
@@ -82,11 +82,12 @@ Normal j'ai changé les nom et les hosts
 Mais en fait ca fonctionne pas ...
 
 
+---
 Donc on pete tous :
 sudo kubeadm reset
 _______________________________________________
 sudo kubeadm reset
-Sur le 01 
+Sur le 01
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
@@ -122,7 +123,6 @@ metadata:
 data:
   index.html:         |
       From My Nginx
----
 apiVersion:           apps/v1
 kind:                 Deployment
 metadata:
@@ -154,7 +154,7 @@ spec:
           items:
             - key:    index.html
               path:   index.html
-              
+
 kubectl apply -f machin.yml
 kubectl get pods -n kube-pdm-depl -o wide
 curl des ip de n'importe ou ca fonctionne.
@@ -166,7 +166,7 @@ sudo ip link delete cni0
 sudo ip link delete flannel.1
 
 sudo kubeadm reset
-Sur le 01 
+Sur le 01
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 
 mkdir -p $HOME/.kube
@@ -183,11 +183,12 @@ Puis on install le truc de merde
 kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
 kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
 
+kubectl get po --all-namespaces -o wide --watch
 kubectl get pods -n kube-pdm-depl -o wide
 
 COOOL ON REDEPLOIE
 -------------------------------------------------------------------------------
-DELETE UN NODE : 
+DELETE UN NODE :
 kubectl cordon kub03
 kubectl get po --all-namespaces -o wide
 kubectl drain kub03 --ignore-daemonsets
@@ -195,7 +196,48 @@ kubectl get po --all-namespaces -o wide
 kubectl get nodes
 kubectl delete node kub03
 -------------------------------------------------------------------------------
-TP 7 : 
+TP 7 :
+kubectl get ds -n kube-system
+kubectl get ds --all-namespaces -o wide
+---> On en a 2.
+création du ficiher tp7.yml
+kubectl apply -f tp7.yml
+kubectl get ds --all-namespaces
+kubectl describe ds kub-pdm-ds -n kube-system
+kubectl get po -n kube-system -o wide
 
+sudo kubectl logs kube-pdm-pod-nginx -n kube-pdm -v=9
+--------------------------------------------------------------------------------
+Scheduling :
+Concept de taint pour donner des droits de schédule sur des nodes ou non.
+Concept d'Affinity/Anti-Affinty
+--------------------------------------------------------------------------------
+TP 8 :
+On commence par tager le nodes :
+kubectl label nodes kub02 nodetype=thebest
+kubectl label nodes kub03 nodetype=themin
+On recérer le déploiement du tp8.yaml
+-> kubectl apply -f tp8.yml
+Check ok
+kubectl get svc --all-namespaces -o wide --watch
+curl ip depuis les nodes OK
+Du coup on casse :
+kubectl label nodes kub03 nodetype=themin
+kubectl delete -f tp8.yml
+kubectl apply -f tp83.yml
+kubectl get po --all-namespaces -o wide --watch
+kubectl describe nodes
 
-
+On passe au taint
+kubectl taint nodes kub02 mort=grave:NoSchedule
+scp tp84 et apply (delete 83 avant)
+--------------------------------------------------------------------------------
+Limit range et Ressource quota
+--------------------------------------------------------------------------------
+RBAC :
+Kub ne gere pas des users normaux c'est externalisé.
+Kub gere les servicer account nativement.
+--------------------------------------------------------------------------------
+Storage :
+PVC consum PV
+Statefull set : permet de persiter le volume.

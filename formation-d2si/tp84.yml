@@ -1,0 +1,76 @@
+---
+apiVersion:           v1
+kind:                 Namespace
+metadata:
+  name:               kube-pdm-depl
+  labels:
+    app:              kube-pdm-depl
+---
+apiVersion:           v1
+kind:                 ConfigMap
+metadata:
+  name:               index-html
+  namespace:          kube-pdm-depl
+data:
+  index.html:         |
+      From My Nginx
+---
+apiVersion:           apps/v1
+kind:                 Deployment
+metadata:
+  name:               nginx-deployment
+  namespace:          kube-pdm-depl
+spec:
+  replicas:           6
+  selector:
+    matchLabels:
+      app:            nginx-selector
+  template:
+    metadata:
+      labels:
+        app:          nginx-selector
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nodetype
+                operator: In
+                values:
+                  - themin
+                  - thebest
+      tolerations:
+        - key: "mort"
+          operator: "Equal"
+          value: "grave"
+          effect: "NoSchedule"
+      containers:
+      - name:         nginx
+        image:        nginx:1.14.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath:  /usr/share/nginx/html
+          readOnly:   true
+          name:       index-html
+      volumes:
+      - name:         index-html
+        configMap:
+          name:       index-html
+          items:
+            - key:    index.html
+              path:   index.html
+---
+apiVersion:           v1
+kind:                 Service
+metadata:
+  name:               svc-nginx
+  namespace:          kube-pdm-depl
+spec:
+  type:               ClusterIP
+  selector:
+    app:              nginx-selector
+  ports:
+  - protocol:         TCP
+    port:             80
