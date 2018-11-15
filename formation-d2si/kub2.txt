@@ -167,7 +167,7 @@ sudo ip link delete flannel.1
 
 sudo kubeadm reset
 Sur le 01 
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -194,3 +194,8 @@ kubectl drain kub03 --ignore-daemonsets
 kubectl get po --all-namespaces -o wide
 kubectl get nodes
 kubectl delete node kub03
+-------------------------------------------------------------------------------
+TP 7 : 
+
+
+

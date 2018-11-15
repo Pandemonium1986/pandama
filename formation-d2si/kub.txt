@@ -327,3 +327,7 @@ Réseaux :
     -> Services
     -> Container.
 --------------------------------------------------------------------------------
+Rappel de la journée :
+- Kubelet
+- CNI
+- SCHEDULER
