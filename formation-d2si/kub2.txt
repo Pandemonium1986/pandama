@@ -241,3 +241,33 @@ Kub gere les servicer account nativement.
 Storage :
 PVC consum PV
 Statefull set : permet de persiter le volume.
+--------------------------------------------------------------------------------
+Day 4 :
+On peut étendre kubernetes avec ses propres objects.
+C'est super stylé et méga CHAUD tu créé un CRD qui définit en gros ton object kub.
+ex : Statefull state prometheus qui sera de kind: prometheus
+--------------------------------------------------------------------------------
+TP 13 :
+Sur le master :
+sudo kubeadm reset
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --node-name=ip-10-0-4-136.eu-west-2.compute.internal
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+sudo kubeadm join 10.0.4.136:6443 --token lgd7hi.3jtas6x3y1a17m7c --discovery-token-ca-cert-hash sha256:8f957c4955fdadd0a05e79c47e79183b8f8157e9035245cd86440f963f6a9a76  --node-name=ip-10-0-4-101.eu-west-2.compute.internal
+sudo kubeadm join 10.0.4.136:6443 --token lgd7hi.3jtas6x3y1a17m7c --discovery-token-ca-cert-hash sha256:8f957c4955fdadd0a05e79c47e79183b8f8157e9035245cd86440f963f6a9a76  --node-name=ip-10-0-95-21.eu-west-2.compute.internal
+
+
+kubectl get po --all-namespaces -o wide
+kubeadm token create --print-join-command
+
+sudo kubeadm join 10.0.4.136:6443 --token qsmyz4.kxihgvyxvhfr9eef --discovery-token-ca-cert-hash sha256:767998346e351987c72d19045962e74c1211dcf3466f38890ac12a894d8c27a6 --node-name=ip-10-0-4-101.eu-west-2.compute.internal
+
+sudo vim /etc/kubernetes/manifests/kube-apiserver.yaml
+sudo vim /etc/kubernetes/manifests/kube-apiserver.yaml
+sudo vim /etc/default/kubelet
+----- Passage sur aws
