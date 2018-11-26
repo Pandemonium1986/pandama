@@ -82,15 +82,15 @@ C'est une Debian 9.5.0 qui ne possede que le strict minimum.
 --------------------------------------------------
 Os : Debian 9.5.0.
 Tools :
-* One line debian install.
-* adduser pandemonium sudo
-* vim /etc/banner.txt
-* vim /etc/ssh/sshd_config
-* systemctl restart sshd.service
-* m-a prepare
-* mount /dev/cdrom /mnt
-* sh /mnt/VBoxLinuxAdditions.run
-* sudo vim /etc/network/interfaces.
+* From pandemonium/debvanilla
+* --> VirtualBox Base Boxes
+* From Install.sh
+* --> One line debian install
+* --> Pandemonium account and dotfiles
+* --> Ansible
+* --> Docker
+* --> Ssh Banner
+* --> zsh/ohmyzsh/tmux/tmuxifier
       "]
   end
 
