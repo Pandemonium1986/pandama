@@ -63,11 +63,32 @@ if ! id -u $VAGRANT_USER > /dev/null 2>&1 ; then
 	usermod -a -G cdrom,floppy,audio,dip,video,plugdev,netdev $VAGRANT_USER
 fi
 
-#-- Docker0
+#-- Docker
 apt-get install -y docker-ce
 groupadd docker
 usermod -aG docker $VAGRANT_USER
 systemctl enable docker
+
+#-- Ssh banner
+if [ ! -f /etc/banner.txt ]; then
+	echo "-----------------------------------------------------------------------
+|--!!! Holy shit you know where you are ? You are in the fucking !!!--|
+-----------------------------------------------------------------------
+#######################################################################
+#### ██████╗  █████╗ ███╗   ██╗██████╗  █████╗ ███╗   ███╗ █████╗  ####
+ ### ██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔══██╗████╗ ████║██╔══██╗ ###
+  ## ██████╔╝███████║██╔██╗ ██║██║  ██║███████║██╔████╔██║███████║ ##
+  ## ██╔═══╝ ██╔══██║██║╚██╗██║██║  ██║██╔══██║██║╚██╔╝██║██╔══██║ ##
+ ### ██║     ██║  ██║██║ ╚████║██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║ ###
+#### ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ####
+#######################################################################
+         Get out of my fucking world if you don't why you here
+-----------------------------------------------------------------------
+!!!! Powered by Pandemonium with Ansible/Vagrant/Docker/Kubernetes !!!!
+-----------------------------------------------------------------------" > /etc/banner.txt
+echo 'Banner /etc/banner.txt' >> /etc/ssh/sshd_config
+systemctl restart sshd.service
+fi
 # ---------------------------------------------------------------------------- #
 
 ########################
