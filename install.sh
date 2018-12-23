@@ -30,6 +30,7 @@ apt-get install -y \
 	net-tools \
 	nmap \
 	powerline \
+	python-dev \
 	software-properties-common \
 	sudo \
 	tree \
