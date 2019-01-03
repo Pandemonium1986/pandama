@@ -1,0 +1,3 @@
+- hosts: default
+  roles:
+    - { role: pandemonium1986.ohmyzsh }

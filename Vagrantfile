@@ -104,8 +104,13 @@ Tools :
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  config.vm.provision "shell", path: "install.sh"
-
+  config.vm.provision "bootstrap", type: "shell", run: "once" do |s|
+    s.path = "shell-provisioner/install.sh"
+  end
+  config.vm.provision "ansible", run: "always" do |ansible|
+    ansible.playbook = "ansible-provisioner/pandama.yml"
+    ansible.config_file = "ansible-provisioner/ansible.cfg"
+  end
   # Pandama special configuration
   config.vm.communicator = "ssh"
   config.vm.graceful_halt_timeout = 60
