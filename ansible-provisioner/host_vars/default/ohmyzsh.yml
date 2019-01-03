@@ -6,8 +6,5 @@ ohmyzsh_users:
   - user_name: pandemonium
     user_group: pandemonium
     user_home: /home/pandemonium
-  - user_name: vagrant
-    user_group: vagrant
-    user_home: /home/vagrant
-
+    
 ohmyzsh_plugins: git git-flow colored-man-pages composer chucknorris debian extract history kubectl minikube ssh-agent zsh-autosuggestions zsh-syntax-highlighting
