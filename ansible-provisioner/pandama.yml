@@ -1,4 +1,4 @@
-- hosts: default
+- hosts: pandama
   roles:
     - { role: pandemonium1986.init }
     - { role: pandemonium1986.ohmyzsh }

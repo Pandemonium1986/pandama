@@ -117,4 +117,5 @@ Tools :
   config.vm.hostname = "pandama"
   config.vm.post_up_message = "Welcome to Pandama Land"
   # config.ssh.username = "pandemonium"
+  config.vm.define "pandama"
 end
