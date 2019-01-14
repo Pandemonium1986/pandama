@@ -4,7 +4,7 @@
 ###########################################
 
 #-- Environment Variables
-VAGRANT_USER="pandemonium"
+VAGRANT_USER="vagrant"
 
 #####################
 # Apt configuration #
