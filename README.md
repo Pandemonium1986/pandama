@@ -1,6 +1,12 @@
 # Pandama
 
 Debian environment provided with my basic tools.  
+<p align="center">
+  <img src="https://img.shields.io/github/license/Pandemonium1986/pandama.svg"/>
+  <img src="https://img.shields.io/github/release/Pandemonium1986/pandama.svg"/>
+  <img src="https://img.shields.io/github/repo-size/Pandemonium1986/pandama.svg"/>
+  <img src="https://img.shields.io/github/release-date/Pandemonium1986/pandama.svg"/>
+</p>
 
 ## Getting Started
 
