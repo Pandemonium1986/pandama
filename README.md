@@ -24,6 +24,7 @@ Install Ansible Role from galaxy :
 ```sh
 ansible-galaxy install --force pandemonium1986.init,0.1.1
 ansible-galaxy install --force pandemonium1986.ohmyzsh,0.1.0
+ansible-galaxy install --force pandemonium1986.ansible,1.0.0
 ansible-galaxy install --force geerlingguy.docker,2.5.2
 ```
 
