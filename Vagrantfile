@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "pandemonium/debvanilla"
-  config.vm.box_version = ">= 1.1.0"
+  config.vm.box_version = ">= 1.2.1"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.66.10"
+  # config.vm.network "private_network", ip: "192.168.66.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -78,19 +78,19 @@ Vagrant.configure("2") do |config|
 ### pandama###
 ############
 Pandemonium Vagrant Box
-C'est une Debian 9.5.0 qui ne possede que le strict minimum.
+C'est une Debian 9.7.0 qui ne possede que le strict minimum.
 --------------------------------------------------
-Os : Debian 9.5.0.
+Os : Debian 9.7.0.
 Tools :
 * From pandemonium/debvanilla
 * --> VirtualBox Base Boxes
-* From Install.sh
-* --> One line debian install
-* --> Pandemonium account and dotfiles
-* --> Ansible
-* --> Docker
-* --> Ssh Banner
-* --> zsh/ohmyzsh/tmux/tmuxifier
+* From Ansible provisioner
+* --> pandemonium1986.init
+* --> pandemonium1986.ohmyzsh
+* --> pandemonium1986.ansible
+* --> geerlingguy.docker
+* From Shell provisioner
+* --> Pandemonium dotfiles
       "]
   end
 

@@ -2,4 +2,5 @@
   roles:
     - { role: pandemonium1986.init }
     - { role: pandemonium1986.ohmyzsh }
+    - { role: pandemonium1986.ansible }
     - { role: geerlingguy.docker }
