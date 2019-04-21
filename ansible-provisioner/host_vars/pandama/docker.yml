@@ -1,7 +1,7 @@
 ---
 # Docker Compose options.
 docker_install_compose: true
-docker_compose_version: "1.23.2"
+docker_compose_version: "1.24.0"
 docker_compose_path: /usr/local/bin/docker-compose
 
 # A list of users who will be added to the docker group.
