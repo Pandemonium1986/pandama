@@ -104,9 +104,10 @@ Tools :
   #   apt-get install -y apache2
   # SHELL
   config.vm.provision "ansible", run: "always" do |ansible|
-    ansible.playbook = "ansible-provisioner/pandama.yml"
+    ansible.compatibility_mode = "2.0"
     ansible.config_file = "ansible-provisioner/ansible.cfg"
     ansible.galaxy_role_file = "ansible-provisioner/requirements.yml"
+    ansible.playbook = "ansible-provisioner/pandama.yml"
   end
   config.vm.provision "bootstrap", type: "shell", run: "once" do |s|
     s.path = "shell-provisioner/install.sh"
