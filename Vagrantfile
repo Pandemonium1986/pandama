@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_version ">= 2.1.5"
+Vagrant.require_version ">= 2.2.4"
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "pandemonium/debvanilla"
-  config.vm.box_version = ">= 1.2.1"
+  config.vm.box_version = ">= 1.3.0"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -78,9 +78,8 @@ Vagrant.configure("2") do |config|
 ### pandama###
 ############
 Pandemonium Vagrant Box
-C'est une Debian 9.7.0 qui ne possede que le strict minimum.
+C'est une Debian 9.8.0 qui ne possede que le strict minimum.
 --------------------------------------------------
-Os : Debian 9.7.0.
 Tools :
 * From pandemonium/debvanilla
 * --> VirtualBox Base Boxes
