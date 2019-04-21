@@ -21,10 +21,7 @@ He is provided with ansible and shell provisioner wich available a fully environ
 Install those Ansible role from galaxy (build only) :
 
 ```sh
-ansible-galaxy install --force pandemonium1986.init,1.0.0
-ansible-galaxy install --force pandemonium1986.ohmyzsh,0.1.0
-ansible-galaxy install --force pandemonium1986.ansible,1.0.0
-ansible-galaxy install --force geerlingguy.docker,2.5.2
+ansible-galaxy install -r ~/git/Pandemonium1986/pandama/ansible-provisioner/requirements.yml -f
 ```
 
 You can read official documentation for installation instruction and read my cheatsheet.  
@@ -70,7 +67,7 @@ Before upload the box into the vagrant cloud :
 vagrant ssh
 sudo visudo # Be sure to add the pandemonium account
 adu && adc && sudo apt autoremove
-cat /dev/null ~/.ssh/known_hosts
+cat /dev/null > ~/.ssh/known_hosts
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key" > ~/.ssh/authorized_keys  
 history -c
 # ctrl + d

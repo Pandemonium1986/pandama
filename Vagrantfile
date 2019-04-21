@@ -106,6 +106,7 @@ Tools :
   config.vm.provision "ansible", run: "always" do |ansible|
     ansible.playbook = "ansible-provisioner/pandama.yml"
     ansible.config_file = "ansible-provisioner/ansible.cfg"
+    ansible.galaxy_role_file = "ansible-provisioner/requirements.yml"
   end
   config.vm.provision "bootstrap", type: "shell", run: "once" do |s|
     s.path = "shell-provisioner/install.sh"
