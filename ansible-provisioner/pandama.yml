@@ -1,6 +1,15 @@
-- hosts: pandama
-  roles:
-    - { role: pandemonium1986.init }
-    - { role: pandemonium1986.ohmyzsh }
-    - { role: pandemonium1986.ansible }
-    - { role: geerlingguy.docker }
+---
+- name :         Pandama installation
+  hosts :        pandama
+  become:        true
+  become_method: sudo
+  become_user:   root
+  tasks:
+    - import_role:
+        name:    pandemonium1986.init
+    - import_role:
+        name:    pandemonium1986.ohmyzsh
+    - import_role:
+        name:    pandemonium1986.ansible
+    - import_role:
+        name:    geerlingguy.docker
