@@ -36,6 +36,12 @@ Vagrant.configure("2") do |config|
     }
   end
 
+  config.vm.provision "ansible", run: "always" do |ansible_mint|
+    ansible_mint.compatibility_mode = "2.0"
+    ansible_mint.config_file = "ansible-provisioner/ansible.cfg"
+    ansible_mint.playbook = "ansible-provisioner/mint.yml"
+  end
+
   config.vm.provision "bootstrap", type: "shell", run: "once" do |s|
     s.path = "shell-provisioner/install.sh"
   end

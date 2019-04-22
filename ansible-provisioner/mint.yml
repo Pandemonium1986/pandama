@@ -1,0 +1,69 @@
+---
+- name :                   Linux Mint installation and configuration
+  hosts :                  pandama-mnt
+  become:                  true
+  become_method:           sudo
+  become_user:             root
+  vars:
+    vagrant_version:       "2.2.4"
+    mint_packages:
+      - 'atom'
+      - 'cryptomator'
+      - 'git'
+      - 'keepassxc'
+      - 'p7zip'
+      - 'signal-desktop'
+      - 'steam'
+      - 'virtualbox-6.0'
+    mint_apt_keys:
+      - 'https://packagecloud.io/AtomEditor/atom/gpgkey'
+      - 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'
+      - 'https://www.virtualbox.org/download/oracle_vbox.asc'
+      - 'https://updates.signal.org/desktop/apt/keys.asc'
+    mint_ppa_repositories:
+      - 'ppa:sebastian-stenzel/cryptomator'
+      - 'ppa:phoerious/keepassxc'
+      - 'ppa:git-core/ppa'
+    mint_repositories:
+      - { repo: "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" , file: "atom" }
+      - { repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bionic contrib" , file: "virtualbox" }
+      - { repo: "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" , file: "signal" }
+      - { repo: "deb http://repo.steampowered.com/steam/ precise steam" , file: "steam" }
+  tasks:
+    - name:                Ensure repositories keys are present
+      apt_key:
+        url:               "{{ item }}"
+        state:             present
+      loop:                "{{ mint_apt_keys|flatten(levels=1) }}"
+
+    - name:                Ensure Steam apt key is present
+      apt_key:
+        id:                "B05498B7"
+        keyserver:         "keyserver.ubuntu.com"
+        state:             present
+
+    - name:                Ensure repositories keys are present
+      apt_repository:
+        repo:              "{{ item.repo }}"
+        filename:          "{{ item.file }}"
+        state:             present
+      loop:                "{{ mint_repositories|flatten }}"
+
+    - name:                Ensure ppa repositories are present
+      apt_repository:
+        repo:              "{{ item }}"
+        codename:          bionic
+        state:             present
+      loop:                "{{ mint_ppa_repositories|flatten(levels=1) }}"
+
+    - name:                Update repositories cache and install mint_packages
+      apt:
+        autoclean:         yes
+        autoremove:        yes
+        name:              "{{ mint_packages }}"
+        update_cache:      yes
+        state:             latest
+
+    - name:                Ensure vagrant package is installed
+      apt:
+        deb:               "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb"
