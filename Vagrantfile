@@ -54,8 +54,7 @@ Vagrant.configure("2") do |config|
 ### pandama-deb ###
 #################
 Pandemonium Vagrant Box
-Debian 9.8.0 provisionnée avec le playbook pandama.
----------------------------------------------------"]
+Debian 9.8.0 provisionnée avec le playbook pandama."]
     end
   end
 
@@ -75,8 +74,7 @@ Debian 9.8.0 provisionnée avec le playbook pandama.
 ### pandama-mnt ###
 #################
 Pandemonium Vagrant Box
-Linux Mint 19.1 provisionnée avec le playbook pandama.
-------------------------------------------------------"]
+Linux Mint 19.1 provisionnée avec le playbook pandama."]
     end
   end
 
