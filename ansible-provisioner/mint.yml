@@ -13,6 +13,7 @@
       - 'cryptomator'
       - 'git'
       - 'keepassxc'
+      - 'openfortivpn'
       - 'p7zip'
       - 'signal-desktop'
       - 'steam'
