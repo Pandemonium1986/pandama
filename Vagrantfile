@@ -42,10 +42,6 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible-provisioner/mint.yml"
   end
 
-  config.vm.provision "bootstrap", type: "shell", run: "once" do |s|
-    s.path = "shell-provisioner/install.sh"
-  end
-
   # Debian box
   config.vm.define "pandama-deb" do |deb|
     deb.vm.box = "pandemonium/debvanilla"
