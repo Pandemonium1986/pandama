@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Provisioning configuration
-  config.vm.provision "ansible", run: "always" do |ansible|
+  config.vm.provision "ansible-pandama", type: "ansible", run: "once" do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.config_file = "ansible-provisioner/ansible.cfg"
     ansible.galaxy_role_file = "ansible-provisioner/requirements.yml"
@@ -36,10 +36,10 @@ Vagrant.configure("2") do |config|
     }
   end
 
-  config.vm.provision "ansible", run: "always" do |ansible_mint|
-    ansible_mint.compatibility_mode = "2.0"
-    ansible_mint.config_file = "ansible-provisioner/ansible.cfg"
-    ansible_mint.playbook = "ansible-provisioner/mint.yml"
+  config.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
+    ansible.compatibility_mode = "2.0"
+    ansible.config_file = "ansible-provisioner/ansible.cfg"
+    ansible.playbook = "ansible-provisioner/mint.yml"
   end
 
   config.vm.provision "bootstrap", type: "shell", run: "once" do |s|
