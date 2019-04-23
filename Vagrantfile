@@ -36,12 +36,6 @@ Vagrant.configure("2") do |config|
     }
   end
 
-  config.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
-    ansible.compatibility_mode = "2.0"
-    ansible.config_file = "ansible-provisioner/ansible.cfg"
-    ansible.playbook = "ansible-provisioner/mint.yml"
-  end
-
   # Debian box
   config.vm.define "pandama-deb" do |deb|
     deb.vm.box = "pandemonium/debvanilla"
@@ -78,6 +72,13 @@ Debian 9.8.0 provisionnée avec le playbook pandama."]
 Pandemonium Vagrant Box
 Linux Mint 19.1 provisionnée avec le playbook pandama."]
     end
+
+    config.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.config_file = "ansible-provisioner/ansible.cfg"
+      ansible.playbook = "ansible-provisioner/mint.yml"
+    end
+    
   end
 
 end
