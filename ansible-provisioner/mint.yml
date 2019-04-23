@@ -7,6 +7,28 @@
   become_method:           sudo
   become_user:             root
   vars:
+    apm_packages:          >
+      atom-beautify
+      busy-signal
+      compare-files
+      file-icons
+      highlight-selected
+      intentions
+      language-ansible
+      language-docker
+      language-groovy
+      linter
+      linter-ansible-linting
+      linter-ansible-syntax
+      linter-js-yaml
+      linter-ui-default
+      linter-vagrant-validate
+      minimap
+      minimap-highlight-selected
+      minimap-linter
+      minimap-split-diff
+      sort-lines
+      split-diff
     vagrant_version:       "2.2.4"
     mint_packages:
       - 'atom'
@@ -38,27 +60,23 @@
         url:               "{{ item }}"
         state:             present
       loop:                "{{ mint_apt_keys|flatten(levels=1) }}"
-
     - name:                Ensure Steam apt key is present
       apt_key:
         id:                "B05498B7"
         keyserver:         "keyserver.ubuntu.com"
         state:             present
-
     - name:                Ensure repositories keys are present
       apt_repository:
         repo:              "{{ item.repo }}"
         filename:          "{{ item.file }}"
         state:             present
       loop:                "{{ mint_repositories|flatten }}"
-
     - name:                Ensure ppa repositories are present
       apt_repository:
         repo:              "{{ item }}"
         codename:          bionic
         state:             present
       loop:                "{{ mint_ppa_repositories|flatten(levels=1) }}"
-
     - name:                Update repositories cache and install mint_packages
       apt:
         autoclean:         yes
@@ -66,7 +84,23 @@
         name:              "{{ mint_packages }}"
         update_cache:      yes
         state:             latest
-
     - name:                Ensure vagrant package is installed
       apt:
         deb:               "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb"
+
+    - name:                Ensure softwares are configured
+      block:
+      - name:              Ensure atom packages are installed
+        command:           "apm install --production {{ apm_packages }}"
+        args:
+          chdir:           /home/pandemonium/.atom
+          creates:         /home/pandemonium/.atom/apm_install_done
+        register:          apm_result
+      - name:              Ensure atom packages installation is done
+        file:
+          path:            /home/pandemonium/.atom/apm_install_done
+          state:           touch
+          mode:            0700
+        when:              apm_result.changed
+      become:              true
+      become_user:         pandemonium
