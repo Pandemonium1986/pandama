@@ -30,7 +30,7 @@
       minimap-split-diff
       sort-lines
       split-diff
-    vagrant_version:       "2.2.4"
+    vagrant_version:       "2.2.5"
     mint_packages:
       - 'atom'
       - 'cryptomator'
