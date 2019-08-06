@@ -20,6 +20,7 @@
       linter
       linter-ansible-linting
       linter-ansible-syntax
+      linter-docker
       linter-js-yaml
       linter-ui-default
       linter-vagrant-validate
