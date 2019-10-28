@@ -17,6 +17,7 @@
       language-ansible
       language-docker
       language-groovy
+      language-ini
       linter
       linter-ansible-linting
       linter-ansible-syntax
