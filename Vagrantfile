@@ -56,8 +56,8 @@ Debian 9.8.0 provisionnée avec le playbook pandama."]
 
   # Linux Mint box
   config.vm.define "pandama-mnt" do |mnt|
-    mnt.vm.box = "pandemonium/mntvanilla"
-    mnt.vm.box_version = ">= 1.0.1"
+    mnt.vm.box = "pandemonium/mint1903"
+    mnt.vm.box_version = ">= 1.0.0"
     mnt.vm.hostname = "pandama-mnt"
     mnt.vm.network "private_network", ip: "192.168.66.31"
     mnt.vm.post_up_message = "Starting pandama-mnt"
@@ -78,7 +78,6 @@ Linux Mint 19.1 provisionnée avec le playbook pandama."]
       ansible.config_file = "ansible-provisioner/ansible.cfg"
       ansible.playbook = "ansible-provisioner/mint.yml"
     end
-    
   end
 
 end
