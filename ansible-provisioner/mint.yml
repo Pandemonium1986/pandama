@@ -1,6 +1,6 @@
 ---
-- name :                   Linux Mint installation and configuration
-  hosts :                  midgar-mnt
+- name:                    Linux Mint installation and configuration
+  hosts:                   midgar-mnt
   # hosts:                 127.0.0.1
   # connection:            local
   become:                  true
@@ -68,11 +68,11 @@
       - 'ppa:phoerious/keepassxc'
       - 'ppa:sebastian-stenzel/cryptomator'
     mint_repositories:
-      - { repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bionic contrib" , file: "virtualbox" }
-      - { repo: "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" , file: "atom" }
-      - { repo: "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" , file: "signal" }
-      - { repo: "deb http://apt.insync.io/mint tina non-free contrib" , file: "insync" }
-      - { repo: "deb http://repo.steampowered.com/steam/ precise steam" , file: "steam" }
+      - { repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bionic contrib", file: "virtualbox" }
+      - { repo: "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main", file: "atom" }
+      - { repo: "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main", file: "signal" }
+      - { repo: "deb http://apt.insync.io/mint tina non-free contrib", file: "insync" }
+      - { repo: "deb http://repo.steampowered.com/steam/ precise steam", file: "steam" }
   tasks:
     - name:                Ensure repositories keys are present
       apt_key:
@@ -99,17 +99,17 @@
       loop:                "{{ mint_ppa_repositories|flatten(levels=1) }}"
     - name:                Update repositories cache and install mint_packages_present
       apt:
-        autoclean:         yes
-        autoremove:        yes
+        autoclean:         true
+        autoremove:        true
         name:              "{{ mint_packages_present }}"
-        update_cache:      yes
+        update_cache:      true
         state:             latest
     - name:                Remove mint_packages_absent
       apt:
-        autoclean:         yes
-        autoremove:        yes
+        autoclean:         true
+        autoremove:        true
         name:              "{{ mint_packages_absent }}"
-        update_cache:      no
+        update_cache:      false
         state:             absent
     - name:                Ensure vagrant package is installed
       apt:
@@ -122,22 +122,22 @@
         deb:               "https://github.com/ramboxapp/community-edition/releases/download/{{ rambox_version }}/Rambox-{{ rambox_version }}-linux-amd64.deb"
     - name:                Ensure softwares are configured
       block:
-      - name:              Ensure atom directory is create
-        file:
-          path:            /home/pandemonium/.atom
-          state:           directory
-          mode:            0755
-      - name:              Ensure atom packages are installed
-        command:           "apm install --production {{ apm_packages }}"
-        args:
-          chdir:           /home/pandemonium/.atom
-          creates:         /home/pandemonium/.atom/apm_install_done
-        register:          apm_result
-      - name:              Ensure atom packages installation is done
-        file:
-          path:            /home/pandemonium/.atom/apm_install_done
-          state:           touch
-          mode:            0700
-        when:              apm_result.changed
+        - name:            Ensure atom directory is create
+          file:
+            path:          /home/pandemonium/.atom
+            state:         directory
+            mode:          0755
+        - name:            Ensure atom packages are installed
+          command:         "apm install --production {{ apm_packages }}"
+          args:
+            chdir:         /home/pandemonium/.atom
+            creates:       /home/pandemonium/.atom/apm_install_done
+          register:        apm_result
+        - name:            Ensure atom packages installation is done
+          file:
+            path:          /home/pandemonium/.atom/apm_install_done
+            state:         touch
+            mode:          0700
+          when:            apm_result.changed
       become:              true
       become_user:         pandemonium
