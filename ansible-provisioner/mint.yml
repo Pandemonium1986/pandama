@@ -1,6 +1,6 @@
 ---
 - name :                   Linux Mint installation and configuration
-  hosts :                  pandama-mnt
+  hosts :                  midgar-mnt
   # hosts:                 127.0.0.1
   # connection:            local
   become:                  true
@@ -92,6 +92,11 @@
 
     - name:                Ensure softwares are configured
       block:
+      - name:              Ensure atom directory is create
+        file:
+          path:            /home/pandemonium/.atom
+          state:           directory
+          mode:            0755
       - name:              Ensure atom packages are installed
         command:           "apm install --production {{ apm_packages }}"
         args:

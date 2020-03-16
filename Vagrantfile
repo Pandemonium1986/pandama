@@ -22,13 +22,13 @@ Vagrant.configure("2") do |config|
   end
 
   # Provisioning configuration
-  config.vm.provision "ansible-pandama", type: "ansible", run: "once" do |ansible|
+  config.vm.provision "ansible-midgar", type: "ansible", run: "once" do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.config_file = "ansible-provisioner/ansible.cfg"
     ansible.galaxy_role_file = "ansible-provisioner/requirements.yml"
-    ansible.playbook = "ansible-provisioner/pandama.yml"
+    ansible.playbook = "ansible-provisioner/midgar.yml"
     ansible.host_vars = {
-      "pandama-mnt" => {
+      "midgar-mnt" => {
         "ansible_python_interpreter" => "/usr/bin/python3",
         "ansible_distribution" => "Ubuntu",
         "ansible_distribution_version" => "Ubuntu.18"
@@ -37,40 +37,40 @@ Vagrant.configure("2") do |config|
   end
 
   # Debian box
-  config.vm.define "pandama-deb" do |deb|
+  config.vm.define "midgar-deb" do |deb|
     deb.vm.box = "pandemonium/debvanilla"
     deb.vm.box_version = ">= 1.3.0"
-    deb.vm.hostname = "pandama-deb"
+    deb.vm.hostname = "midgar-deb"
     deb.vm.network "private_network", ip: "192.168.66.30"
-    deb.vm.post_up_message = "Starting pandama-deb"
+    deb.vm.post_up_message = "Starting midgar-deb"
     deb.vm.provider :virtualbox do |vb|
-      vb.name = "pandama-deb"
+      vb.name = "midgar-deb"
       vb.customize ["modifyvm", :id, "--description", "
 #################
-### pandama-deb ###
+### midgar-deb ###
 #################
 Pandemonium Vagrant Box
-Debian 9.8.0 provisionnée avec le playbook pandama."]
+Debian 9.8.0 provisionnée avec le playbook midgar."]
     end
   end
 
   # Linux Mint box
-  config.vm.define "pandama-mnt" do |mnt|
+  config.vm.define "midgar-mnt" do |mnt|
     mnt.vm.box = "pandemonium/mint1903"
     mnt.vm.box_version = ">= 1.0.0"
-    mnt.vm.hostname = "pandama-mnt"
+    mnt.vm.hostname = "midgar-mnt"
     mnt.vm.network "private_network", ip: "192.168.66.31"
-    mnt.vm.post_up_message = "Starting pandama-mnt"
+    mnt.vm.post_up_message = "Starting midgar-mnt"
     mnt.vm.provider :virtualbox do |vb|
       vb.cpus = 2
       vb.memory = "4096"
-      vb.name = "pandama-mnt"
+      vb.name = "midgar-mnt"
       vb.customize ["modifyvm", :id, "--description", "
 #################
-### pandama-mnt ###
+### midgar-mnt ###
 #################
 Pandemonium Vagrant Box
-Linux Mint 19.1 provisionnée avec le playbook pandama."]
+Linux Mint 19.1 provisionnée avec le playbook midgar."]
     end
 
     config.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
