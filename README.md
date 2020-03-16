@@ -1,17 +1,18 @@
-# Pandama
+# Midgar
 
-[![Vagrant Cloud](https://img.shields.io/badge/vagrant-pandama-lightgrey.svg)](https://app.vagrantup.com/pandemonium/boxes/pandama)
-![](https://img.shields.io/github/release/Pandemonium1986/pandama.svg)
-![](https://img.shields.io/github/repo-size/Pandemonium1986/pandama.svg)
-![](https://img.shields.io/github/release-date/Pandemonium1986/pandama.svg)
-![](https://img.shields.io/github/license/Pandemonium1986/pandama.svg)
+[![Vagrant Cloud](https://img.shields.io/badge/vagrant-midgar-lightgrey.svg)](https://app.vagrantup.com/pandemonium/boxes/midgar)
+![](https://img.shields.io/github/release/Pandemonium1986/midgar.svg)
+![](https://img.shields.io/github/repo-size/Pandemonium1986/midgar.svg)
+![](https://img.shields.io/github/release-date/Pandemonium1986/midgar.svg)
+![](https://img.shields.io/github/license/Pandemonium1986/midgar.svg)
 
 Debian environment provided with my basic tools.  
 
 ## Getting Started
 
-This project start/build a virtualbox vm from my debian base box [pandemonium/debvanilla](https://app.vagrantup.com/pandemonium/boxes/debvanilla) or from my Linux mint base box [pandemonium/mntvanilla](https://app.vagrantup.com/pandemonium/boxes/mntvanilla).  
-They are provided with ansible provisioner which available a fully environment with my basics tools.
+This project start/build a virtualbox vm from my debian base box [pandemonium/mint1903](https://app.vagrantup.com/pandemonium/boxes/mint1903).  
+He is provided with ansible and shell provisioner wich available a fully environment with my basics tools.
+
 
 ### Prerequisites
 
@@ -37,7 +38,7 @@ Simply initialize and up the box.
 Note pandama box is only available for debian environment. If you want to used the Linux mint environment please refer to "Building" section.
 
 ```sh
-vagrant init pandemonium/pandama
+vagrant init pandemonium/midgar
 vagrant up
 ```
 
@@ -52,8 +53,8 @@ vagrant ssh
 If you want to build the boxes, you need to clone the git repository and be sure to have ansible installed.
 
 ```sh
-git clone https://github.com/Pandemonium1986/pandama.git ~/git/Pandemonium1986/pandama
-cd ~/git/Pandemonium1986/pandama
+git clone https://github.com/Pandemonium1986/midgar.git ~/git/Pandemonium1986/midgar
+cd ~/git/Pandemonium1986/midgar
 vagrant up
 ```
 

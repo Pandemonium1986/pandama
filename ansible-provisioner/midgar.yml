@@ -1,6 +1,6 @@
 ---
-- name :            Pandama installation
-  hosts :           all
+- name:             Midgar installation
+  hosts:            all
   become:           true
   become_method:    sudo
   become_user:      root
@@ -19,11 +19,11 @@
           git:
             repo:   'https://github.com/Pandemonium1986/dotfiles'
             dest:   /home/pandemonium/git/Pandemonium1986/dotfiles
-            update: yes
+            update: true
         - name:     Ensure tmuxifier is install
           git:
             repo:   'https://github.com/jimeh/tmuxifier.git'
             dest:   /home/pandemonium/.tmuxifier
-            update: yes
+            update: true
       become:       true
       become_user:  pandemonium
