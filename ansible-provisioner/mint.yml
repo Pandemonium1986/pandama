@@ -31,30 +31,47 @@
       minimap-split-diff
       sort-lines
       split-diff
-    vagrant_version:       "2.2.5"
-    mint_packages:
+    qsync_version:         "1.0.4.1302"
+    rambox_version:        "0.7.3"
+    vagrant_version:       "2.2.7"
+    mint_packages_present:
       - 'atom'
+      - 'cheese'
+      - 'chromium-browser'
       - 'cryptomator'
+      - 'fortune'
+      - 'gimp'
       - 'git'
+      - 'insync'
       - 'keepassxc'
       - 'openfortivpn'
       - 'p7zip'
+      - 'remmina'
       - 'signal-desktop'
+      - 'snapd'
       - 'steam'
-      - 'virtualbox-6.0'
+      - 'virtualbox-6.1'
+      - 'vlc'
+      # - 'spotify-client'
+    mint_packages_absent:
+      - 'gnote'
+      - 'hexchat'
+      - 'onboard'
+      - 'thunderbird'
     mint_apt_keys:
       - 'https://packagecloud.io/AtomEditor/atom/gpgkey'
+      - 'https://updates.signal.org/desktop/apt/keys.asc'
       - 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'
       - 'https://www.virtualbox.org/download/oracle_vbox.asc'
-      - 'https://updates.signal.org/desktop/apt/keys.asc'
     mint_ppa_repositories:
-      - 'ppa:sebastian-stenzel/cryptomator'
-      - 'ppa:phoerious/keepassxc'
       - 'ppa:git-core/ppa'
+      - 'ppa:phoerious/keepassxc'
+      - 'ppa:sebastian-stenzel/cryptomator'
     mint_repositories:
-      - { repo: "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" , file: "atom" }
       - { repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bionic contrib" , file: "virtualbox" }
+      - { repo: "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" , file: "atom" }
       - { repo: "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" , file: "signal" }
+      - { repo: "deb http://apt.insync.io/mint tina non-free contrib" , file: "insync" }
       - { repo: "deb http://repo.steampowered.com/steam/ precise steam" , file: "steam" }
   tasks:
     - name:                Ensure repositories keys are present
@@ -64,9 +81,10 @@
       loop:                "{{ mint_apt_keys|flatten(levels=1) }}"
     - name:                Ensure Steam apt key is present
       apt_key:
-        id:                "B05498B7"
+        id:                "{{ item }}"
         keyserver:         "keyserver.ubuntu.com"
         state:             present
+      loop:                [ "ACCAF35C", "B05498B7" ]
     - name:                Ensure repositories keys are present
       apt_repository:
         repo:              "{{ item.repo }}"
@@ -79,17 +97,29 @@
         codename:          bionic
         state:             present
       loop:                "{{ mint_ppa_repositories|flatten(levels=1) }}"
-    - name:                Update repositories cache and install mint_packages
+    - name:                Update repositories cache and install mint_packages_present
       apt:
         autoclean:         yes
         autoremove:        yes
-        name:              "{{ mint_packages }}"
+        name:              "{{ mint_packages_present }}"
         update_cache:      yes
         state:             latest
+    - name:                Remove mint_packages_absent
+      apt:
+        autoclean:         yes
+        autoremove:        yes
+        name:              "{{ mint_packages_absent }}"
+        update_cache:      no
+        state:             absent
     - name:                Ensure vagrant package is installed
       apt:
         deb:               "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb"
-
+    - name:                Ensure qsync package is installed
+      apt:
+        deb:               "https://download.qnap.com/Storage/Utility/QNAPQsyncClientUbuntux64-{{ qsync_version }}.deb"
+    - name:                Ensure rambox package is installed
+      apt:
+        deb:               "https://github.com/ramboxapp/community-edition/releases/download/{{ rambox_version }}/Rambox-{{ rambox_version }}-linux-amd64.deb"
     - name:                Ensure softwares are configured
       block:
       - name:              Ensure atom directory is create
