@@ -38,8 +38,8 @@ Vagrant.configure("2") do |config|
 
   # Debian box
   config.vm.define "midgar-deb" do |deb|
-    deb.vm.box = "pandemonium/debvanilla"
-    deb.vm.box_version = ">= 1.3.0"
+    deb.vm.box = "pandemonium/debian10"
+    deb.vm.box_version = ">= 1.0.0"
     deb.vm.hostname = "midgar-deb"
     deb.vm.network "private_network", ip: "192.168.66.30"
     deb.vm.post_up_message = "Starting midgar-deb"
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
 ### midgar-deb ###
 #################
 Pandemonium Vagrant Box
-Debian 9.8.0 provisionnée avec le playbook midgar."]
+Debian 10.3.0 provisionnée avec le playbook midgar."]
     end
   end
 
@@ -70,7 +70,7 @@ Debian 9.8.0 provisionnée avec le playbook midgar."]
 ### midgar-mnt ###
 #################
 Pandemonium Vagrant Box
-Linux Mint 19.1 provisionnée avec le playbook midgar."]
+Linux Mint 19.3 provisionnée avec le playbook midgar."]
     end
 
     config.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
