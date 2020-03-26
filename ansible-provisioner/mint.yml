@@ -32,7 +32,7 @@
       sort-lines
       split-diff
     qsync_version:         "1.0.4.1302"
-    rambox_version:        "0.7.3"
+    rambox_version:        "0.7.5"
     vagrant_version:       "2.2.7"
     mint_packages_present:
       - 'atom'
