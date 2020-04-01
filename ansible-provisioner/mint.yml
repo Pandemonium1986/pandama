@@ -120,6 +120,9 @@
     - name:                Ensure rambox package is installed
       apt:
         deb:               "https://github.com/ramboxapp/community-edition/releases/download/{{ rambox_version }}/Rambox-{{ rambox_version }}-linux-amd64.deb"
+    - name:                Ensure bitwarden package is installed
+      apt:
+        deb:               "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
     - name:                Ensure softwares are configured
       block:
         - name:            Ensure atom directory is create
