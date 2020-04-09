@@ -1,8 +1,8 @@
 ---
 - name:                    Linux Mint installation and configuration
-  hosts:                   midgar-mnt
-  # hosts:                 127.0.0.1
-  # connection:            local
+  # hosts:                   midgar-mnt
+  hosts:                 127.0.0.1
+  connection:            local
   become:                  true
   become_method:           sudo
   become_user:             root
@@ -123,6 +123,9 @@
     - name:                Ensure bitwarden package is installed
       apt:
         deb:               "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
+    - name:                Ensure Veracrypt package is installed
+      apt:
+        deb:               "https://launchpad.net/veracrypt/trunk/1.24-update4/+download/veracrypt-1.24-Update4-Ubuntu-18.04-amd64.deb"
     - name:                Ensure softwares are configured
       block:
         - name:            Ensure atom directory is create
