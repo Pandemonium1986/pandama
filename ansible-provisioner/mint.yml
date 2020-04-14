@@ -32,7 +32,7 @@
       sort-lines
       split-diff
     qsync_version:         "1.0.4.1302"
-    rambox_version:        "0.7.3"
+    rambox_version:        "0.7.5"
     vagrant_version:       "2.2.7"
     mint_packages_present:
       - 'atom'
@@ -120,6 +120,12 @@
     - name:                Ensure rambox package is installed
       apt:
         deb:               "https://github.com/ramboxapp/community-edition/releases/download/{{ rambox_version }}/Rambox-{{ rambox_version }}-linux-amd64.deb"
+    - name:                Ensure bitwarden package is installed
+      apt:
+        deb:               "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
+    - name:                Ensure Veracrypt package is installed
+      apt:
+        deb:               "https://launchpad.net/veracrypt/trunk/1.24-update4/+download/veracrypt-1.24-Update4-Ubuntu-18.04-amd64.deb"
     - name:                Ensure softwares are configured
       block:
         - name:            Ensure atom directory is create
