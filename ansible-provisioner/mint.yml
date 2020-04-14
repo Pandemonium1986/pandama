@@ -1,8 +1,8 @@
 ---
 - name:                    Linux Mint installation and configuration
-  # hosts:                   midgar-mnt
-  hosts:                 127.0.0.1
-  connection:            local
+  hosts:                   midgar-mnt
+  # hosts:                 127.0.0.1
+  # connection:            local
   become:                  true
   become_method:           sudo
   become_user:             root
