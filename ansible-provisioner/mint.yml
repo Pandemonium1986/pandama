@@ -8,9 +8,9 @@
   become_user:             root
   vars:
     apm_packages:          >
+      activate-power-mode
       atom-beautify
       busy-signal
-      compare-files
       file-icons
       highlight-selected
       intentions
@@ -22,7 +22,7 @@
       linter-ansible-linting
       linter-ansible-syntax
       linter-docker
-      linter-js-yaml
+      linter-shellcheck
       linter-ui-default
       linter-vagrant-validate
       minimap
