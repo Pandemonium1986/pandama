@@ -12,6 +12,7 @@
       atom-beautify
       busy-signal
       file-icons
+      git-time-machine
       highlight-selected
       intentions
       language-ansible
