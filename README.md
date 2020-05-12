@@ -57,6 +57,26 @@ cd ~/git/Pandemonium1986/midgar
 vagrant up midgar[-deb|-mnt]
 ```
 
+## Provisioning
+
+If you wish to provision the box at startup
+
+```sh
+vagrant up midgar-mnt|-deb --provision
+```
+
+If you want to provision the box after startup
+
+```sh
+vagrant provision midgar-mnt|-deb
+```
+
+If you want to trigger the playbook mint locally
+
+```sh
+ansible-playbook mint.yml -i "localhost," -c local -K
+```
+
 ## Update
 
 Before upload the box into the vagrant cloud :

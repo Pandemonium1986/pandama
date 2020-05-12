@@ -1,6 +1,6 @@
 ---
 - name:                    Linux Mint installation and configuration
-  hosts:                   midgar-mnt
+  hosts:                   all
   # hosts:                 127.0.0.1
   # connection:            local
   become:                  true
@@ -32,7 +32,7 @@
       minimap-split-diff
       sort-lines
       split-diff
-    qsync_version:         "1.0.4.1302"
+    qsync_version:         "1.0.5.0305"
     rambox_version:        "0.7.5"
     vagrant_version:       "2.2.7"
     mint_packages_present:
