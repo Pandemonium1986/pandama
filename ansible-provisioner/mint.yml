@@ -11,6 +11,7 @@
       activate-power-mode
       atom-beautify
       busy-signal
+      editorconfig
       file-icons
       git-time-machine
       highlight-selected
