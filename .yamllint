@@ -49,7 +49,7 @@ rules:
     indent-sequences:         consistent
     check-multi-line-strings: false
   line-length:                disable
-    
+
   # quoted-strings:
   #   level:                  warning
   #   quote-type:             double
