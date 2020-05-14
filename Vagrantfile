@@ -72,8 +72,7 @@ Debian 10.3.0 provisionnée avec le playbook midgar."]
 Pandemonium Vagrant Box
 Linux Mint 19.3 provisionnée avec le playbook midgar."]
     end
-
-    config.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
+    mnt.vm.provision "ansible-mint", type: "ansible", run: "once" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.config_file = "ansible-provisioner/ansible.cfg"
       ansible.playbook = "ansible-provisioner/mint.yml"
