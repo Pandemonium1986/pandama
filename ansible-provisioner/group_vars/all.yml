@@ -8,4 +8,4 @@ docker_users:
 
 # Minikube version number
 minikube_version: "1.12.3"
-x_ansible_download_dir: "{{ ansible_env.HOME }}/.cache"
+x_ansible_download_dir: "{{ ansible_env.HOME }}/.cache/minikube"
