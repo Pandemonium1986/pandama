@@ -15,6 +15,8 @@
         name:       geerlingguy.docker
     - import_role:
         name:       gantsign.minikube
+    - import_role:
+        name:       andrewrothstein.kubectl
     - name:         Ensure softwares are configured
       block:
         - name:     Ensure pandemonium dotfiles are installed
