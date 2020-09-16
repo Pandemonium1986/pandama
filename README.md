@@ -116,3 +116,37 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 -   [Manage and configure Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#set-wsl-launch-settings)  
 -   [Vagrant and Wsl](https://www.vagrantup.com/docs/other/wsl.html)
 -   [Wsl cheatsheet](https://github.com/Pandemonium1986/cheatsheet/blob/master/Wsl.md).  
+
+## Note
+
+```sh
+# Dotfiles fixing
+htop
+mkdir -p /home/pandemonium/.atom
+mkdir -p /home/pandemonium/.backupdotfiles/.config/htop/
+mkdir -p /home/pandemonium/.config/xed/
+mkdir -p /home/pandemonium/.config/yamllint/
+pip install --upgrade --user ansible ansible-lint beautysh==4.1 gita httpie molecule openstacksdk pip pre-commit youtube-dl
+~/.local/bin/ansible-playbook install.yml -c local -i "127.0.0.1,"
+export PATH="$HOME/.tmuxifier/bin:$HOME/.local/bin/:$PATH"
+
+# Minikube quick and dirty starting
+# https://github.com/kubernetes/minikube/issues/4350
+# https://github.com/kubernetes/kubeadm/issues/193#issuecomment-330060848
+sudo systemctl stop docker
+sudo iptables --flush
+sudo iptables -tnat --flush
+sudo systemctl start docker
+minikube config set driver docker
+minikube start --driver=docker
+kubectl get pods -n kube-system
+
+# None driver
+# sudo ufw disable
+# sudo iptables -L
+# free
+# nproc
+# sudo apt install conntrack
+# sudo minikube config set driver none
+# CHANGE_MINIKUBE_NONE_USER=true sudo -E minikube start --driver=none
+```
