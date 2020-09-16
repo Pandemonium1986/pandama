@@ -64,7 +64,7 @@ Debian 10.3.0 provisionnée avec le playbook midgar."]
     mnt.vm.post_up_message = 'Starting midgar-mnt'
     mnt.vm.provider :virtualbox do |vb|
       vb.cpus = 2
-      vb.memory = '4096'
+      vb.memory = '8192'
       vb.name = 'midgar-mnt'
       vb.customize ['modifyvm', :id, '--description', "
 #################

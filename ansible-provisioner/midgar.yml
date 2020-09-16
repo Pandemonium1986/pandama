@@ -13,6 +13,8 @@
         name:       pandemonium1986.ansible
     - import_role:
         name:       geerlingguy.docker
+    - import_role:
+        name:       gantsign.minikube
     - name:         Ensure softwares are configured
       block:
         - name:     Ensure pandemonium dotfiles are installed

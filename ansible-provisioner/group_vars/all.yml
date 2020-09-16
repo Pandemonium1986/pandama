@@ -5,3 +5,7 @@ docker_compose_version: "1.25.4"
 # A list of users who will be added to the docker group.
 docker_users:
   - pandemonium
+
+# Minikube version number
+minikube_version: "1.12.3"
+x_ansible_download_dir: "{{ ansible_env.HOME }}/.cache"
