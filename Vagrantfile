@@ -19,7 +19,7 @@ Vagrant.configure('2') do |config|
     vb.customize ['modifyvm', :id, '--vram', '64']
     vb.gui = false
     vb.linked_clone = false
-    vb.memory = '1024'
+    vb.memory = '4096'
   end
 
   # Provisioning configuration
