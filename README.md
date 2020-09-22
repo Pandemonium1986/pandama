@@ -120,15 +120,10 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 ## Note
 
 ```sh
-# Dotfiles fixing
-htop
-mkdir -p /home/pandemonium/.atom
-mkdir -p /home/pandemonium/.backupdotfiles/.config/htop/
-mkdir -p /home/pandemonium/.config/xed/
-mkdir -p /home/pandemonium/.config/yamllint/
-pip install --upgrade --user ansible ansible-lint beautysh==4.1 gita httpie molecule openstacksdk pip pre-commit youtube-dl
-~/.local/bin/ansible-playbook install.yml -c local -i "127.0.0.1,"
+# Dotfiles installation
 export PATH="$HOME/.tmuxifier/bin:$HOME/.local/bin/:$PATH"
+pip install --upgrade --user ansible ansible-lint beautysh==4.1 gita httpie molecule openstacksdk pip pre-commit youtube-dl
+~/.local/bin/ansible-playbook install.yml -c local -i "127.0.0.1," -K
 
 # Minikube quick and dirty starting
 # https://github.com/kubernetes/minikube/issues/4350
