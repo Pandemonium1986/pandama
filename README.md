@@ -121,6 +121,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ```sh
 # Dotfiles installation
+cd ~/git/Pandemonium1986/dotfiles
 export PATH="$HOME/.tmuxifier/bin:$HOME/.local/bin/:$PATH"
 pip install --upgrade --user ansible ansible-lint beautysh==4.1 gita httpie molecule openstacksdk pip pre-commit youtube-dl
 ~/.local/bin/ansible-playbook install.yml -c local -i "127.0.0.1," -K
