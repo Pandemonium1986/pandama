@@ -16,7 +16,7 @@
     - import_role:
         name:       gantsign.minikube
     - import_role:
-        name:       andrewrothstein.kubectl
+        name:       pandemonium1986.kubectl
     - name:         Ensure softwares are configured
       block:
         - name:     Ensure pandemonium dotfiles are installed
