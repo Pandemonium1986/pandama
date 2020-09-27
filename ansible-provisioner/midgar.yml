@@ -14,7 +14,7 @@
     - import_role:
         name:       geerlingguy.docker
     - import_role:
-        name:       gantsign.minikube
+        name:       pandemonium1986.minikube
     - import_role:
         name:       pandemonium1986.kubectl
     - name:         Ensure softwares are configured
