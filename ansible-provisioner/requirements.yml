@@ -9,7 +9,7 @@
   version: 2.3.0
 - src:     geerlingguy.docker
   version: 2.7.0
-- src:     pandemonium1986.kubectl
+- src:     pandemonium1986.kubectx
   version: 1.0.1
 - src:     pandemonium1986.minikube
   version: 1.0.1
