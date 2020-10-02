@@ -13,3 +13,5 @@
   version: 1.0.1
 - src:     pandemonium1986.minikube
   version: 1.0.1
+- src:     pandemonium1986.stern
+  version: 1.0.0

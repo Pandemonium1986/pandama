@@ -17,6 +17,8 @@
         name:       pandemonium1986.minikube
     - import_role:
         name:       pandemonium1986.kubectx
+    - import_role:
+        name:       pandemonium1986.stern
     - name:         Ensure softwares are configured
       block:
         - name:     Ensure pandemonium dotfiles are installed
