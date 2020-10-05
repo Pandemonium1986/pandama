@@ -18,7 +18,11 @@
     - import_role:
         name:       pandemonium1986.kubectx
     - import_role:
+        name:       pandemonium1986.k9s
+    - import_role:
         name:       pandemonium1986.stern
+    - import_role:
+        name:       pandemonium1986.helm
     - name:         Ensure softwares are configured
       block:
         - name:     Ensure pandemonium dotfiles are installed
