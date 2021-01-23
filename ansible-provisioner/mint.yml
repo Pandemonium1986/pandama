@@ -131,7 +131,7 @@
         deb:               "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
     - name:                Ensure Veracrypt package is installed
       apt:
-        deb:               "https://launchpad.net/veracrypt/trunk/1.24-update4/+download/veracrypt-1.24-Update4-Ubuntu-18.04-amd64.deb"
+        deb:               "https://launchpad.net/veracrypt/trunk/1.24-update7/+download/veracrypt-1.24-Update7-Ubuntu-18.04-amd64.deb"
     - name:                Ensure softwares are configured
       block:
         - name:            Ensure atom directory is create
