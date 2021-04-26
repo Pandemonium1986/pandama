@@ -127,7 +127,7 @@
         deb:               "https://github.com/ramboxapp/community-edition/releases/download/{{ rambox_version }}/Rambox-{{ rambox_version }}-linux-amd64.deb"
     - name:                Ensure drawio package is installed
       apt:
-        deb:               "https://github.com/jgraph/drawio-desktop/releases/download/v{{ drawio_version }}/draw.io-amd64-{{ drawio_version }}.deb"
+        deb:               "https://github.com/jgraph/drawio-desktop/releases/download/v{{ drawio_version }}/drawio-amd64-{{ drawio_version }}.deb"
     - name:                Ensure bitwarden package is installed
       apt:
         deb:               "https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
