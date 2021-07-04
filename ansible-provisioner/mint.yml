@@ -20,11 +20,13 @@
       language-docker
       language-groovy
       language-ini
+      language-terraform
       linter
       linter-ansible-linting
       linter-ansible-syntax
       linter-docker
       linter-shellcheck
+      linter-terraform-syntax
       linter-ui-default
       linter-vagrant-validate
       minimap
